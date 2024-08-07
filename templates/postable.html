@@ -199,11 +199,24 @@
         }
     </style>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const unlock = document.getElementById("unlock");
+
+            unlock.addEventListener("click", function () {
+                const poster = document.getElementById("poster");
+                poster.style.display = "flex";
+            });
+        });
+    </script>
 </head>
 <body>
 <div>
     <div id="top">
         <h1>Halli St Blog</h1>
+        <button id="unlock">
+            <img alt="lock" src="/public/lock.svg"/>
+        </button>
     </div>
     <p id="description">
         Welcome to my blog I will be documenting my dev journey here,
@@ -218,5 +231,16 @@
         {{end}}
     </div>
 </div>
+<form hx-post="/post" hx-target="#posts" hx-trigger="submit" id="poster">
+    <label for="password">Password</label>
+    <input id="password" name="password" type="text"/>
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text"/>
+    <label for="body">Body</label>
+    <textarea id="body" name="body"></textarea>
+    <button id="submit" type="submit">Post</button>
+</form>
+
+<script src="/public/scripts/htmx.min"></script>
 </body>
 </html>
