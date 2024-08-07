@@ -2,10 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"github.com/gin-contrib/gzip"
-	"github.com/gin-gonic/gin"
 	"go-blog/service"
 	"os"
+
+	"github.com/gin-contrib/gzip"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
