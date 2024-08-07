@@ -4,21 +4,11 @@ import (
 	"database/sql"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go-blog/service"
-	"log"
 	"os"
 )
 
 func main() {
-	// Make .env work in the project
-	err := godotenv.Load("./.env")
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	} else {
-		log.Println(".env file loaded successfully")
-	}
-
 	// Initialize the database
 	service.InitDatabase()
 	defer func(Db *sql.DB) {
@@ -73,7 +63,7 @@ func main() {
 	})
 
 	//======== Run the server
-	err = e.Run(":8080")
+	err := e.Run(":8080")
 	if err != nil {
 		return
 	}
