@@ -1,13 +1,22 @@
-FROM golang:1.20
+FROM golang:1.22
 
-WORKDIR ./
+# Set the working directory inside the container
+WORKDIR /app
 
-COPY go.mod go.sum ./
+# Copy go.mod and go.sum files
+COPY app/go.mod app/go.sum ./
+
+# Download dependencies
 RUN go mod download
 
-COPY . .
+# Copy the rest of the application code
+COPY app/ .
 
-RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev
-RUN CGO_ENABLED=1 GOOS=linux go build -v -o main .
+# Install sqlite3 and its development libraries
+RUN apt-get update && apt-get install -y gcc sqlite3 libsqlite3-dev
 
-CMD ["./main"]
+# Build the Go application
+RUN CGO_ENABLED=1 GOOS=linux go build -o main -tags sqlite_fts5 .
+
+# Set the entry point for the container
+CMD ["/app/main"]

@@ -1,10 +1,10 @@
+// service/service.go
 package service
 
 import (
 	"database/sql"
-	"log"
-
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 )
 
 type BlogPost struct {
@@ -30,6 +30,9 @@ func InitDatabase() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Log to confirm table creation
+	log.Println("Database initialized and table `blog` created or already exists.")
 }
 
 func GetBlogPosts() []BlogPost {
@@ -39,7 +42,7 @@ func GetBlogPosts() []BlogPost {
 	}
 	defer rows.Close()
 
-	posts := []BlogPost{}
+	var posts []BlogPost
 	for rows.Next() {
 		post := BlogPost{}
 		err := rows.Scan(&post.ID, &post.Title, &post.Body)
