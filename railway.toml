@@ -4,3 +4,6 @@ buildCommand = "CGO_ENABLED=1 go build -o main ."
 
 [deploy]
 startCommand = "./main"
+
+[env]
+PASSWORD = "JuicyBlog28"
