@@ -10,17 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.20'
-        
-    - name: Build
-      run: CGO_ENABLED=1 go build -v ./...
-      
-    - name: Test
-      run: CGO_ENABLED=1 go build -v ./...
-      env:
-        DB_PASSWORD: ${{ secrets.PASSWORD }}
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Build
+        run: CGO_ENABLED=1 go build -v ./...
+
+      - name: Test
+        run: CGO_ENABLED=1 go build -v ./...
+        env:
+          PASSWORD: ${{ secrets.PASSWORD }}
