@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"go-blog/service"
+	"log"
 	"os"
 
 	"github.com/gin-contrib/gzip"
@@ -52,6 +53,7 @@ func main() {
 		password := c.PostForm("password")
 
 		if password != os.Getenv("PASSWORD") {
+			log.Println(os.Getenv("PASSWORD"))
 			c.JSON(401, gin.H{"error": "Unauthorized"})
 			return
 		}
