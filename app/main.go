@@ -53,6 +53,7 @@ func main() {
 		password := c.PostForm("password")
 
 		if password != os.Getenv("PASSWORD") {
+			log.Println("Password mismatch")
 			log.Println(os.Getenv("PASSWORD"))
 			c.JSON(401, gin.H{"error": "Unauthorized"})
 			return
