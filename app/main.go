@@ -30,10 +30,10 @@ func main() {
 	// Define the routes
 	//=========== GET / - Display the list of blog posts
 	e.GET("/", func(c *gin.Context) {
-		posts := service.GetBlogPosts()
-		log.Println(posts)
+		// posts := service.GetBlogPosts()
+		// log.Println(posts)
 		c.Header("Cache-Control", "no-cache")
-		c.HTML(200, "index.html", gin.H{"posts": posts})
+		// c.HTML(200, "index.html", gin.H{"posts": posts})
 	})
 
 	//=========== GET /postable - can post a new blog post

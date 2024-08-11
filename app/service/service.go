@@ -23,26 +23,25 @@ func InitDatabase() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer Db.Close()
 }
 
 func GetBlogPosts() []BlogPost {
-	rows, err := Db.Query("select * from posts")
+	rows, err := Db.Query("SELECT id, title, body, description FROM posts")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
-	log.Println(rows)
-	posts := []BlogPost{}
+
+	var posts []BlogPost
 	for rows.Next() {
-		var post BlogPost
-		err := rows.Scan(&post.ID, &post.Title, &post.Description, &post.Body)
+		post := BlogPost{}
+		err := rows.Scan(&post.ID, &post.Title, &post.Body, &post.Description)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Println(post)
 		posts = append(posts, post)
 	}
+
 	return posts
 }
 
