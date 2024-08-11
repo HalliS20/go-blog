@@ -19,15 +19,15 @@ var Db *sql.DB
 
 func InitDatabase() {
 	connStr := "postgresql://Blog_owner:D4nb2hMustHr@ep-late-sun-a5p8yfr7.us-east-2.aws.neon.tech/Blog?sslmode=require"
-	db, err := sql.Open("postgres", connStr)
+	Db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer Db.Close()
 }
 
 func GetBlogPosts() []BlogPost {
-	rows, err := db.Query("select * from posts")
+	rows, err := Db.Query("select * from posts")
 	if err != nil {
 		log.Fatal(err)
 	}
