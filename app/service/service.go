@@ -3,61 +3,48 @@ package service
 
 import (
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
 	"log"
+
+	_ "github.com/lib/pq"
 )
 
 type BlogPost struct {
-	ID    int    `json:"id"`
-	Title string `json:"title"`
-	Body  string `json:"body"`
+	ID          int    `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Body        string `json:"body"`
 }
 
 var Db *sql.DB
 
 func InitDatabase() {
-	var err error
-	Db, err = sql.Open("sqlite3", "./blog.db")
+	connStr := "postgresql://Blog_owner:D4nb2hMustHr@ep-late-sun-a5p8yfr7.us-east-2.aws.neon.tech/Blog?sslmode=require"
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	_, err = Db.Exec(`CREATE TABLE IF NOT EXISTS blog (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        body TEXT
-    );`)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Log to confirm table creation
-	log.Println("Database initialized and table `blog` created or already exists.")
+	defer db.Close()
 }
 
 func GetBlogPosts() []BlogPost {
-	rows, err := Db.Query("SELECT id, title, body FROM blog")
+	rows, err := db.Query("select * from posts")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
-
-	var posts []BlogPost
+	log.Println(rows)
+	posts := []BlogPost{}
 	for rows.Next() {
-		post := BlogPost{}
-		err := rows.Scan(&post.ID, &post.Title, &post.Body)
+		var post BlogPost
+		err := rows.Scan(&post.ID, &post.Title, &post.Description, &post.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
+		log.Println(post)
 		posts = append(posts, post)
 	}
-
 	return posts
 }
 
 func CreateBlogPost(post BlogPost) {
-	_, err := Db.Exec("INSERT INTO blog (title, body) VALUES (?, ?)", post.Title, post.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
 }
