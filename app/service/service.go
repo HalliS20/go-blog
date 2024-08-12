@@ -51,7 +51,7 @@ func GetBlogPosts() []BlogPost {
 		post := BlogPost{}
 		var date time.Time
 
-		err := rows.Scan(&post.ID, &post.Title, &post.Body, &post.Description, &date)
+		err := rows.Scan(&post.ID, &post.Title, &post.Description, &post.Body, &date)
 		if err != nil {
 			log.Fatal("Error scanning row: ", err)
 		}
