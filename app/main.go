@@ -114,6 +114,7 @@ func main() {
 	e.POST("/post", func(c *gin.Context) {
 		title := c.PostForm("title")
 		body := c.PostForm("body")
+		description := c.PostForm("description")
 		password := c.PostForm("password")
 
 		if password != os.Getenv("PASSWORD") {
@@ -125,6 +126,7 @@ func main() {
 		post := service.BlogPost{
 			Title: title,
 			Body:  body,
+			Description: description,
 		}
 		service.CreateBlogPost(post)
 		c.JSON(200, gin.H{"status": "posted"})

@@ -68,4 +68,9 @@ func GetBlogPosts() []BlogPost {
 
 
 func CreateBlogPost(post BlogPost) {
+	_, err := Db.Exec("INSERT INTO posts (title, description, body) VALUES ($1, $2, $3)", post.Title, post.Description, post.Body)
+	if err != nil {
+		log.Fatal("Error inserting post: ", err)
+	}
+	
 }
