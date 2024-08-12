@@ -68,9 +68,15 @@ func main() {
 	e.StaticFile("/favicon.ico", "./public/static/favicon.ico")
 	e.Static("/styling", "./public/styling")
 
+	newPost := 0
+
 	// Define the routes
 	//=========== GET / - Display the list of blog posts
 	e.GET("/", func(c *gin.Context) {
+		if newPost == 1 {
+			posts = service.GetBlogPosts()
+			newPost = 0
+		} 
 		c.Header("Cache-Control", "no-cache")
 		c.HTML(200, "index.html", gin.H{
 			"posts":      posts,
@@ -80,6 +86,10 @@ func main() {
 
 	//=========== GET /postable - can post a new blog post
 	e.GET("/postable", func(c *gin.Context) {
+		if newPost == 1 {
+			posts = service.GetBlogPosts()
+			newPost = 0
+		} 
 		c.Header("Cache-Control", "no-cache")
 		c.HTML(200, "postable.html", gin.H{
 			"posts":      posts,
@@ -130,6 +140,7 @@ func main() {
 		}
 		service.CreateBlogPost(post)
 		c.JSON(200, gin.H{"status": "posted"})
+		newPost = 1
 	})
 
 	//======== Run the server
