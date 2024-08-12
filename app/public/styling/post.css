@@ -67,7 +67,7 @@ h1:hover {
   text-shadow: 0 0 3px var(--text);
 }
 
-#description {
+#main-description {
   padding: 10px;
   border-bottom: 1px solid var(--text);
   white-space: nowrap;
@@ -79,7 +79,7 @@ h1:hover {
   transition: background-color 0.3s, box-shadow 0.3s, text-shadow 0.3s;
 }
 
-#description:hover {
+#main-description:hover {
   cursor: pointer;
   box-shadow: 0 5px 5px -6px var(--text);
   text-shadow: 0 0 3px var(--text);
