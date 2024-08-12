@@ -100,7 +100,7 @@ func main() {
 			c.JSON(400, gin.H{"error": "Invalid post ID"})
 			return
 		}
-		post := posts[id-1]
+		post := posts[len(posts)-id]
 		c.HTML(200, "post.html", gin.H{
 			"post":         post,
 			"title":        post.Title,
