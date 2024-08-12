@@ -1,222 +1,49 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Home</title>
-    <meta
+    <head>
+        <title>Halli Dev</title>
+        <meta
             content="Welcome to my dev blog. Here you will find the latest posts and updates on my work."
             name="description"
-    />
-    <meta content="HalliS20" name="author"/>
-    <meta
+        />
+        <meta content="HalliS20" name="author" />
+        <meta
             content="blog, posts, updates, dev, life, work, tech"
             name="keywords"
-    />
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        />
+        <meta charset="UTF-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <style>
-        :root {
-            --main: #faf9f6;
-            --main2: white;
-            --second: #edebe4;
-            --text: #050609;
-            --hover: #12141b;
-            --gradient: linear-gradient(30deg, skyblue, lightcoral);
-            --beige2: #f5f5dc;
-            --radius: 3px;
-            --back: linear-gradient(0deg, var(--main), var(--main2));
-            background-color: var(--main2);
-        }
+        <link rel="stylesheet" href="/public/styling/main.css" />
+    </head>
+    <body>
+        <div>
+            <div id="page-top">
+                <button id="title-button" onclick="window.location.href='/'">
+                    <h1>Halli Dev</h1>
+                </button>
+            </div>
+            <p id="description">
+                Welcome to my blog I will be documenting my dev journey here,
+                hope you enjoy and learn from my mistakes.
+            </p>
+            <div id="posts">
+                {{range .posts}}
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --main: #050609;
-                --main2: black;
-                --second: #12141b;
-                --text: #faf9f6;
-                --hover: #edebe4;
-            }
-
-            img {
-                filter: invert(0);
-            }
-
-            #unlock:hover img {
-                filter: invert(1);
-            }
-
-        }
-
-        @media (prefers-color-scheme: light) {
-            img {
-                filter: invert(1);
-            }
-
-            #unlock:hover img {
-                filter: invert(0);
-            }
-
-        }
-
-        #poster {
-            display: none;
-            flex-direction: column;
-            font-size: 0.8em;
-        }
-
-        #top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        html {
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            font-size: 1.1em;
-
-            background: var(--back);
-        }
-
-        body {
-            font-family: "Verdana", sans-serif;
-            margin: 40px;
-        }
-
-        h1 {
-            padding: 10px;
-            width: min-content;
-            border-bottom: 1px solid var(--text);
-            white-space: pre; /* Preserve whitespace */
-            overflow-wrap: normal; /* Disable text wrapping */
-            word-wrap: normal;
-            transition: text-shadow 0.3s,
-            background 0.3s,
-            background-color 0.3s,
-            box-shadow 0.2s;
-        }
-
-        h1:hover {
-            cursor: pointer;
-            color: var(--text);
-            box-shadow: 0 5px 5px -6px var(--text);
-            text-shadow: 0 0 3px var(--text);
-        }
-
-        #description {
-            padding: 10px;
-            border-bottom: 1px solid var(--text);
-            white-space: nowrap; /* Preserve whitespace */
-            overflow-wrap: normal; /* Disable text wrapping */
-            word-wrap: normal;
-            text-decoration: none;
-            transition: background-color 0.3s,
-            box-shadow 0.3s,
-            text-shadow 0.3s;
-        }
-
-        #description:hover {
-            cursor: pointer;
-            box-shadow: 0 5px 5px -6px var(--text);
-            text-shadow: 0 0 3px var(--text);
-        }
-
-        article {
-            border-radius: var(--radius);
-            padding: 10px;
-            border: 1px solid var(--text);
-            transition: background-color 0.3s,
-            box-shadow 0.3s;
-        }
-
-        article:hover {
-            cursor: pointer;
-            background-color: var(--second);
-            box-shadow: 1px 1px 3px 1px var(--text);
-        }
-
-        img {
-            width: 25px;
-            height: 25px;
-            padding: 4px 3px;
-            transition: filter 0.3s;
-        }
-
-        #unlock {
-            border: 1px solid var(--main2);
-            border-radius: 100%;
-            background-color: var(--main2);
-            transition: border 0.3s, filter 0.3s;
-
-        }
-
-        #unlock:hover {
-            cursor: pointer;
-            border: 1px solid var(--text);
-        }
-
-
-        #posts {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        #password {
-            width: min-content;
-        }
-
-        #title {
-            width: min-content;
-        }
-
-        #body {
-            width: 50%;
-            height: 100px;
-            resize: none;
-        }
-
-        #submit {
-            width: min-content;
-            padding: 5px;
-            border-radius: var(--radius);
-            background-color: var(--main);
-            border: 1px solid var(--text);
-            color: var(--text);
-            transition: background-color 0.3s, box-shadow 0.3s, text-shadow 0.3s;
-            margin-top: 10px;
-        }
-
-        #submit:hover {
-            cursor: pointer;
-            background-color: var(--second);
-            box-shadow: 1px 1px 2px 1px var(--text);
-            text-shadow: 1px 1px 2px var(--text);
-        }
-    </style>
-
-</head>
-<body>
-<div>
-    <div id="top">
-        <h1>Halli St Blog</h1>
-    </div>
-    <p id="description">
-        Welcome to my blog I will be documenting my dev journey here,
-        hope you enjoy and learn from my mistakes.
-    </p>
-    <div id="posts">
-        {{range .posts}}
-        <article>
-            <h2>{{.Title}}</h2>
-            <p>{{.Body}}</p>
-        </article>
-        {{end}}
-    </div>
-</div>
-</body>
+                <button
+                    onclick="window.location.href='/posts/' + {{.ID}}"
+                    class="post-button"
+                >
+                    <article class="post-article">
+                        <div class="post-top">
+                            <h2>{{.Title}}</h2>
+                            <p class="date">{{.Date}}</p>
+                        </div>
+                        <p>{{.Description}}</p>
+                    </article>
+                </button>
+                {{end}}
+            </div>
+        </div>
+    </body>
 </html>

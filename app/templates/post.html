@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            content="blog, posts, updates, dev, life, work, tech"
+            name="keywords"
+        />
+        <meta content="HalliS20" name="author" />
+        <meta content="{{.post.Description}}" name="description" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+        <title>{{.post.Title}}</title>
+        <link rel="stylesheet" href="/public/styling/post.css" />
+    </head>
+    <body>
+        <div id="page-top">
+            <button id="title-button" onclick="window.location.href='/'">
+                <h1>Halli Dev</h1>
+            </button>
+        </div>
+
+        <article id="blog-article">
+            <div class="post-top">
+                <h2>{{.post.Title}}</h2>
+                <p class="date">{{.post.Date}}</p>
+            </div>
+            <p id="article-body">{{.post.Body}}</p>
+        </article>
+    </body>
+    <link rel="stylesheet" href="/public/styling/main.css" />
+</html>

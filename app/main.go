@@ -5,6 +5,7 @@ import (
 	"go-blog/service"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -27,18 +28,17 @@ func main() {
 
 	e.LoadHTMLGlob("templates/*")
 
+	posts := service.GetBlogPosts()
+
 	// Define the routes
 	//=========== GET / - Display the list of blog posts
 	e.GET("/", func(c *gin.Context) {
-		// posts := service.GetBlogPosts()
-		// log.Println(posts)
 		c.Header("Cache-Control", "no-cache")
-		// c.HTML(200, "index.html", gin.H{"posts": posts})
+		c.HTML(200, "index.html", gin.H{"posts": posts})
 	})
 
 	//=========== GET /postable - can post a new blog post
 	e.GET("/postable", func(c *gin.Context) {
-		posts := service.GetBlogPosts()
 		c.Header("Cache-Control", "no-cache")
 		c.HTML(200, "postable.html", gin.H{"posts": posts})
 	})
@@ -46,6 +46,18 @@ func main() {
 	//=========== GET images and such
 	e.GET("/public/*filepath", func(c *gin.Context) {
 		c.File("public/" + c.Param("filepath"))
+	})
+
+	//=========== GET /post/:id - Display a single blog post
+	e.GET("/posts/:id", func(c *gin.Context) {
+		idStr := c.Param("id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			c.JSON(400, gin.H{"error": "Invalid post ID"})
+			return
+		}
+		post := posts[id-1]
+		c.HTML(200, "post.html", gin.H{"post": post})
 	})
 
 	//========== POST /post - Create a new blog post

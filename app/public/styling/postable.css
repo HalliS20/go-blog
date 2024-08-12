@@ -1,0 +1,84 @@
+@import "main.css";
+
+@media (prefers-color-scheme: dark) {
+    img {
+        filter: invert(0);
+    }
+
+    #unlock:hover img {
+        filter: invert(1);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    img {
+        filter: invert(1);
+    }
+
+    #unlock:hover img {
+        filter: invert(0);
+    }
+}
+
+#poster {
+    display: none;
+    flex-direction: column;
+    font-size: 0.8em;
+}
+
+
+img {
+    width: 25px;
+    height: 25px;
+    padding: 4px 3px;
+    transition: filter 0.3s;
+}
+
+#unlock {
+    border: 1px solid var(--main2);
+    border-radius: 100%;
+    background-color: var(--main2);
+    transition:
+            border 0.3s,
+            filter 0.3s;
+}
+
+#unlock:hover {
+    cursor: pointer;
+    border: 1px solid var(--text);
+}
+
+#password {
+    width: min-content;
+}
+
+#title {
+    width: min-content;
+}
+
+#body {
+    width: 50%;
+    height: 100px;
+    resize: none;
+}
+
+#submit {
+    width: min-content;
+    padding: 5px;
+    border-radius: var(--radius);
+    background-color: var(--main);
+    border: 1px solid var(--text);
+    color: var(--text);
+    transition:
+            background-color 0.3s,
+            box-shadow 0.3s,
+            text-shadow 0.3s;
+    margin-top: 10px;
+}
+
+#submit:hover {
+    cursor: pointer;
+    background-color: var(--second);
+    box-shadow: 1px 1px 2px 1px var(--text);
+    text-shadow: 1px 1px 2px var(--text);
+}
