@@ -2,7 +2,9 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"go-blog/service"
+	"html/template"
 	"log"
 	"os"
 	"strconv"
@@ -11,6 +13,34 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
+
+func readFile(filePath string) (string, error) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+}
+
+func getCSS() (template.CSS, template.CSS, template.CSS, error) {
+	cssMain, err := readFile("./public/styling/main.css")
+	if err != nil {
+		return "", "", "", err
+	}
+	cssPost, err := readFile("./public/styling/post.css")
+	if err != nil {
+		return "", "", "", err
+	}
+	cssPostable, err := readFile("./public/styling/postable.css")
+	if err != nil {
+		return "", "", "", err
+	}
+
+	safeCssMain := template.CSS(cssMain)
+	safeCssPost := template.CSS(cssPost)
+	safeCssPostable := template.CSS(cssPostable)
+	return safeCssMain, safeCssPost, safeCssPostable, nil
+}
 
 func main() {
 	// Initialize the database
@@ -30,17 +60,31 @@ func main() {
 
 	posts := service.GetBlogPosts()
 
+	cssMain, cssPost, cssPostable, err := getCSS()
+	if err != nil {
+		log.Fatal("Error reading CSS files: ", err)
+	}
+
+	e.StaticFile("/favicon.ico", "./public/static/favicon.ico")
+	e.Static("/styling", "./public/styling")
+
 	// Define the routes
 	//=========== GET / - Display the list of blog posts
 	e.GET("/", func(c *gin.Context) {
 		c.Header("Cache-Control", "no-cache")
-		c.HTML(200, "index.html", gin.H{"posts": posts})
+		c.HTML(200, "index.html", gin.H{
+			"posts":      posts,
+			"cssContent": cssMain,
+		})
 	})
 
 	//=========== GET /postable - can post a new blog post
 	e.GET("/postable", func(c *gin.Context) {
 		c.Header("Cache-Control", "no-cache")
-		c.HTML(200, "postable.html", gin.H{"posts": posts})
+		c.HTML(200, "postable.html", gin.H{
+			"posts":      posts,
+			"cssContent": cssPostable,
+		})
 	})
 
 	//=========== GET images and such
@@ -57,7 +101,13 @@ func main() {
 			return
 		}
 		post := posts[id-1]
-		c.HTML(200, "post.html", gin.H{"post": post})
+		c.HTML(200, "post.html", gin.H{
+			"post":         post,
+			"title":        post.Title,
+			"description":  post.Description,
+			"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
+			"cssContent":   cssPost,
+		})
 	})
 
 	//========== POST /post - Create a new blog post
@@ -81,7 +131,7 @@ func main() {
 	})
 
 	//======== Run the server
-	err := e.Run(":8080")
+	err = e.Run(":8080")
 	if err != nil {
 		return
 	}

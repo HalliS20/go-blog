@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <title>Halli Dev</title>
@@ -13,9 +13,7 @@
         />
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-        <link rel="stylesheet" href="/public/styling/postable.css" />
-
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const unlock = document.getElementById("unlock")
@@ -26,6 +24,9 @@
                 })
             })
         </script>
+        <style>
+            {{.cssContent}}
+        </style>
     </head>
     <body>
         <div>
@@ -34,7 +35,7 @@
                     <h1>Halli Dev</h1>
                 </button>
                 <button id="unlock">
-                    <img alt="lock" src="/public/lock.svg" />
+                    <img alt="lock" src="/public/static/lock.svg" />
                 </button>
             </div>
             <p id="description">

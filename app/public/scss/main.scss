@@ -20,6 +20,7 @@
     --hover: #edebe4;
   }
 }
+
 #page-top {
   display: flex;
   justify-content: space-between;
@@ -39,6 +40,7 @@ html {
   width: 100vw;
   height: 100vh;
   font-size: 1.1em;
+
   background: var(--back);
 }
 
@@ -57,7 +59,8 @@ h1 {
   overflow-wrap: normal;
   /* Disable text wrapping */
   word-wrap: normal;
-  transition: text-shadow 0.3s, background 0.3s, background-color 0.3s, box-shadow 0.2s;
+  transition: text-shadow 0.3s, background 0.3s, background-color 0.3s,
+    box-shadow 0.2s;
 }
 
 h1:hover {
@@ -137,5 +140,3 @@ h2 {
   background-color: var(--second);
   box-shadow: 1px 1px 3px 1px var(--text);
 }
-
-/*# sourceMappingURL=main.css.map */

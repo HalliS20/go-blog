@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -7,11 +7,16 @@
             name="keywords"
         />
         <meta content="HalliS20" name="author" />
-        <meta content="{{.post.Description}}" name="description" />
+        <meta content="{{.description}}" name="description" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
-        <title>{{.post.Title}}</title>
-        <link rel="stylesheet" href="/public/styling/post.css" />
+        <title>{{ .title }}</title>
+
+        <link rel="canonical" href="{{ .canonicalURL }}" />
+        <style>
+            {{.cssContent}}
+        </style>
     </head>
     <body>
         <div id="page-top">
@@ -21,7 +26,7 @@
         </div>
 
         <article id="blog-article">
-            <div class="post-top">
+            <div class="article-top">
                 <h2>{{.post.Title}}</h2>
                 <p class="date">{{.post.Date}}</p>
             </div>
