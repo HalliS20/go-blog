@@ -53,7 +53,7 @@ func loadEnv() {
 
 func main() {
 	// Initialize the database
-	loadEnv()
+	// loadEnv()
 	service.InitDatabase()
 	defer func(Db *sql.DB) {
 		err := Db.Close()
