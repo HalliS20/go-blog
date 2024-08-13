@@ -4,6 +4,7 @@ package service
 import (
 	"database/sql"
 	"log"
+	"os"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -20,7 +21,9 @@ type BlogPost struct {
 var Db *sql.DB
 
 func InitDatabase() {
-	connStr := "postgresql://Blog_owner:D4nb2hMustHr@ep-late-sun-a5p8yfr7.us-east-2.aws.neon.tech/Blog?sslmode=require"
+	user := "Blog_owner"
+	password := os.Getenv("DB_PASSWORD")
+	connStr := "postgresql://" + user + ":" + password + "@ep-late-sun-a5p8yfr7.us-east-2.aws.neon.tech/Blog?sslmode=require"
 	var err error
 	Db, err = sql.Open("postgres", connStr)
 	if err != nil {
@@ -66,11 +69,9 @@ func GetBlogPosts() []BlogPost {
 	return posts
 }
 
-
 func CreateBlogPost(post BlogPost) {
 	_, err := Db.Exec("INSERT INTO posts (title, description, body) VALUES ($1, $2, $3)", post.Title, post.Description, post.Body)
 	if err != nil {
 		log.Fatal("Error inserting post: ", err)
 	}
-	
 }
