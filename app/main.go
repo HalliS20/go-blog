@@ -76,7 +76,7 @@ func main() {
 		if newPost == 1 {
 			posts = service.GetBlogPosts()
 			newPost = 0
-		} 
+		}
 		c.Header("Cache-Control", "no-cache")
 		c.HTML(200, "index.html", gin.H{
 			"posts":      posts,
@@ -89,7 +89,7 @@ func main() {
 		if newPost == 1 {
 			posts = service.GetBlogPosts()
 			newPost = 0
-		} 
+		}
 		c.Header("Cache-Control", "no-cache")
 		c.HTML(200, "postable.html", gin.H{
 			"posts":      posts,
@@ -110,7 +110,18 @@ func main() {
 			c.JSON(400, gin.H{"error": "Invalid post ID"})
 			return
 		}
-		post := posts[len(posts)-id]
+    var post *service.BlogPost
+    for _, p := range posts {
+        if p.ID == id {
+            post = &p
+            break
+        }
+    }
+
+    if post == nil {
+        c.JSON(404, gin.H{"error": "Post not found"})
+        return
+    }
 		c.HTML(200, "post.html", gin.H{
 			"post":         post,
 			"title":        post.Title,
@@ -134,8 +145,8 @@ func main() {
 			return
 		}
 		post := service.BlogPost{
-			Title: title,
-			Body:  body,
+			Title:       title,
+			Body:        body,
 			Description: description,
 		}
 		service.CreateBlogPost(post)
