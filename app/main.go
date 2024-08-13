@@ -11,7 +11,9 @@ import (
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/russross/blackfriday/v2"
 )
 
 func readFile(filePath string) (string, error) {
@@ -42,8 +44,16 @@ func getCSS() (template.CSS, template.CSS, template.CSS, error) {
 	return safeCssMain, safeCssPost, safeCssPostable, nil
 }
 
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+}
+
 func main() {
 	// Initialize the database
+	loadEnv()
 	service.InitDatabase()
 	defer func(Db *sql.DB) {
 		err := Db.Close()
@@ -110,22 +120,25 @@ func main() {
 			c.JSON(400, gin.H{"error": "Invalid post ID"})
 			return
 		}
-    var post *service.BlogPost
-    for _, p := range posts {
-        if p.ID == id {
-            post = &p
-            break
-        }
-    }
+		var post *service.BlogPost
+		for _, p := range posts {
+			if p.ID == id {
+				post = &p
+				break
+			}
+		}
 
-    if post == nil {
-        c.JSON(404, gin.H{"error": "Post not found"})
-        return
-    }
+		if post == nil {
+			c.JSON(404, gin.H{"error": "Post not found"})
+			return
+		}
+
+		safeBody := template.HTML(post.Body)
 		c.HTML(200, "post.html", gin.H{
 			"post":         post,
 			"title":        post.Title,
 			"description":  post.Description,
+			"body":         safeBody,
 			"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
 			"cssContent":   cssPost,
 		})
@@ -144,9 +157,12 @@ func main() {
 			c.JSON(401, gin.H{"error": "Unauthorized"})
 			return
 		}
+
+		bodyMarkdown := blackfriday.Run([]byte(body))
+
 		post := service.BlogPost{
 			Title:       title,
-			Body:        body,
+			Body:        string(bodyMarkdown),
 			Description: description,
 		}
 		service.CreateBlogPost(post)
