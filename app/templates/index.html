@@ -19,16 +19,21 @@
         </style>
     </head>
     <body>
-        <div>
-            <div id="page-top">
-                <button id="title-button" onclick="window.location.href='/'">
-                    <h1>Halli Dev</h1>
-                </button>
+        <div id="page">
+            <div id="top-desc">
+                <div id="page-top">
+                    <button
+                        id="title-button"
+                        onclick="window.location.href='/'"
+                    >
+                        <h1>Halli Dev</h1>
+                    </button>
+                </div>
+                <p id="main-description">
+                    Welcome to my blog I will be documenting my dev mistakes
+                    here, hope it will help you.
+                </p>
             </div>
-            <p id="main-description">
-                Welcome to my blog I will be documenting my dev journey here,
-                hope you enjoy and learn from my mistakes.
-            </p>
             <div id="posts">
                 {{range .posts}}
 
