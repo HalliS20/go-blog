@@ -17,39 +17,38 @@
 		<style>
 			{{.cssContent}}
 		</style>
+		<script>
+			{{.jsFile}}
+		</script>
 	</head>
 	<body>
-		<div id="page">
-			<div id="top-desc">
-				<div id="page-top">
-					<button
-						id="title-button"
-						onclick="window.location.href='/'"
-					>
-						<h1>Halli Dev</h1>
-					</button>
+		<div id="content">
+			<div id="page">
+				<div id="top-desc">
+					<div id="page-top">
+						<button id="title-button" data-href="/">
+							<h1>Halli Dev</h1>
+						</button>
+					</div>
+					<p id="main-description">
+						Welcome to my blog I will be documenting my dev mistakes
+						here, hope it will help you.
+					</p>
 				</div>
-				<p id="main-description">
-					Welcome to my blog I will be documenting my dev mistakes
-					here, hope it will help you.
-				</p>
-			</div>
-			<div id="posts">
-				{{range .posts}}
+				<div id="posts">
+					{{range .posts}}
 
-				<button
-					onclick="window.location.href='/posts/' + {{.ID}}"
-					class="post-button"
-				>
-					<article class="post-article">
-						<div class="post-top">
-							<h2>{{.Title}}</h2>
-							<p class="date">{{.Date}}</p>
-						</div>
-						<p>{{.Description}}</p>
-					</article>
-				</button>
-				{{end}}
+					<button data-href="/posts/{{.ID}}" class="post-button">
+						<article class="post-article">
+							<div class="post-top">
+								<h2>{{.Title}}</h2>
+								<p class="date">{{.Date}}</p>
+							</div>
+							<p>{{.Description}}</p>
+						</article>
+					</button>
+					{{end}}
+				</div>
 			</div>
 		</div>
 	</body>

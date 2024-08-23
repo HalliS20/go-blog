@@ -60,32 +60,40 @@ func setRoutes() {
 		log.Fatal("Error reading CSS files: ", err)
 	}
 
-	e.GET("/", func(c *gin.Context) { showPosts(c, cssMain) })                // show all posts
-	e.GET("/postable", func(c *gin.Context) { showPostable(c, cssPostable) }) // postable site
-	e.GET("/posts/:id", func(c *gin.Context) { showPost(c, cssPost) })        // show a single post
-	e.POST("/post", func(c *gin.Context) { sendPost(c) })                     // send a post
+	jsMain, err := getJS()
+	if err != nil {
+		log.Fatal("Error reading JS file: ", err)
+	}
+
+	e.GET("/", func(c *gin.Context) { showPosts(c, cssMain, jsMain) })                // home page (with posts)
+	e.GET("/posts", func(c *gin.Context) { showPosts(c, cssMain, jsMain) })           // show all posts
+	e.GET("/postable", func(c *gin.Context) { showPostable(c, cssPostable, jsMain) }) // postable site
+	e.GET("/posts/:id", func(c *gin.Context) { showPost(c, cssPost, jsMain) })        // show a single post
+	e.POST("/posts", func(c *gin.Context) { sendPost(c) })                            // send a post
 	e.GET("/public/*filepath", func(c *gin.Context) {
 		c.File("public/" + c.Param("filepath"))
 	}) // serve static files
 }
 
-func showPosts(c *gin.Context, cssMain template.CSS) {
+func showPosts(c *gin.Context, cssMain template.CSS, jsMain template.JS) {
 	c.Header("Cache-Control", "no-cache")
 	c.HTML(200, "index.html", gin.H{
 		"posts":      posts,
 		"cssContent": cssMain,
+		"jsFile":     jsMain,
 	})
 }
 
-func showPostable(c *gin.Context, cssPostable template.CSS) {
+func showPostable(c *gin.Context, cssPostable template.CSS, jsMain template.JS) {
 	c.Header("Cache-Control", "no-cache")
 	c.HTML(200, "postable.html", gin.H{
 		"posts":      posts,
 		"cssContent": cssPostable,
+		"jsFile":     jsMain,
 	})
 }
 
-func showPost(c *gin.Context, cssPost template.CSS) {
+func showPost(c *gin.Context, cssPost template.CSS, jsMain template.JS) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
@@ -115,6 +123,7 @@ func showPost(c *gin.Context, cssPost template.CSS) {
 		"body":         safeBody,
 		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
 		"cssContent":   cssPost,
+		"jsFile":       jsMain,
 	})
 }
 
@@ -169,6 +178,14 @@ func getCSS() (template.CSS, template.CSS, template.CSS, error) {
 	safeCssPost := template.CSS(cssPost)
 	safeCssPostable := template.CSS(cssPostable)
 	return safeCssMain, safeCssPost, safeCssPostable, nil
+}
+
+func getJS() (template.JS, error) {
+	js, err := readFile("./public/scripts/main.js")
+	if err != nil {
+		return "", err
+	}
+	return template.JS(js), nil
 }
 
 func loadEnv() {

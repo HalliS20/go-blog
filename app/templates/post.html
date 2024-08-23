@@ -9,40 +9,41 @@
 		<meta content="HalliS20" name="author" />
 		<meta content="{{.description}}" name="description" />
 		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 
 		<title>{{ .title }}</title>
 
-		<link rel="canonical" href="{{ .canonicalURL }}" />
+		<link href="{{ .canonicalURL }}" rel="canonical" />
 		<style>
 			{{.cssContent}}
 		</style>
+		<script>
+			{{.jsFile}}
+		</script>
 	</head>
 	<body>
-		<div id="page">
-			<div id="top-desc">
-				<div id="page-top">
-					<button
-						id="title-button"
-						onclick="window.location.href='/'"
-					>
-						<h1>Halli Dev</h1>
-					</button>
-				</div>
-			</div>
-
-			<article id="blog-article">
-				<div class="article-top">
-					<h2>{{.post.Title}}</h2>
-					<p class="date">{{.post.Date}}</p>
-				</div>
-				<div class="article-parent">
-					<div class="article-body">
-						<p>{{.body}}</p>
+		<div id="content">
+			<div id="page">
+				<div id="top-desc">
+					<div id="page-top">
+						<button id="title-button" data-href="/">
+							<h1>Halli Dev</h1>
+						</button>
 					</div>
 				</div>
-			</article>
+
+				<article id="blog-article">
+					<div class="article-top">
+						<h2>{{.post.Title}}</h2>
+						<p class="date">{{.post.Date}}</p>
+					</div>
+					<div class="article-parent">
+						<div class="article-body">
+							<p>{{.body}}</p>
+						</div>
+					</div>
+				</article>
+			</div>
 		</div>
 	</body>
-	<link rel="stylesheet" href="/public/styling/main.css" />
 </html>

@@ -27,61 +27,59 @@
 		<style>
 			{{.cssContent}}
 		</style>
+		<script>
+			{{.jsFile}}
+		</script>
 	</head>
 	<body>
-		<div id="page">
-			<div id="top-desc">
-				<div id="page-top">
-					<button
-						id="title-button"
-						onclick="window.location.href='/'"
-					>
-						<h1>Halli Dev</h1>
-					</button>
-					<button id="unlock">
-						<img alt="lock" src="/public/static/lock.svg" />
-					</button>
+		<div id="content">
+			<div id="page">
+				<div id="top-desc">
+					<div id="page-top">
+						<button id="title-button" data-href="/">
+							<h1>Halli Dev</h1>
+						</button>
+						<button id="unlock">
+							<img alt="lock" src="/public/static/lock.svg" />
+						</button>
+					</div>
+					<p id="main-description">
+						Welcome to my blog I will be documenting my dev mistakes
+						here, hope it will help you.
+					</p>
 				</div>
-				<p id="main-description">
-					Welcome to my blog I will be documenting my dev mistakes
-					here, hope it will help you.
-				</p>
-			</div>
-			<div id="posts">
-				{{range .posts}}
+				<div id="posts">
+					{{range .posts}}
 
-				<button
-					onclick="window.location.href='/posts/' + {{.ID}}"
-					class="post-button"
-				>
-					<article class="post-article">
-						<div class="post-top">
-							<h2>{{.Title}}</h2>
-							<p class="date">{{.Date}}</p>
-						</div>
-						<p>{{.Description}}</p>
-					</article>
-				</button>
-				{{end}}
+					<button data-href="/posts/{{.ID}}" class="post-button">
+						<article class="post-article">
+							<div class="post-top">
+								<h2>{{.Title}}</h2>
+								<p class="date">{{.Date}}</p>
+							</div>
+							<p>{{.Description}}</p>
+						</article>
+					</button>
+					{{end}}
+				</div>
 			</div>
+			<form
+				hx-post="/posts"
+				hx-target="#posts"
+				hx-trigger="submit"
+				id="poster"
+			>
+				<label for="password">Password</label>
+				<input id="password" name="password" type="text" />
+				<label for="title">Title</label>
+				<input id="title" name="title" type="text" />
+				<label for="description">Description</label>
+				<textarea id="description" name="description"></textarea>
+				<label for="body">Body</label>
+				<textarea id="body" name="body"></textarea>
+				<button id="submit" type="submit">Post</button>
+			</form>
 		</div>
-		<form
-			hx-post="/post"
-			hx-target="#posts"
-			hx-trigger="submit"
-			id="poster"
-		>
-			<label for="password">Password</label>
-			<input id="password" name="password" type="text" />
-			<label for="title">Title</label>
-			<input id="title" name="title" type="text" />
-			<label for="description">Description</label>
-			<textarea id="description" name="description"></textarea>
-			<label for="body">Body</label>
-			<textarea id="body" name="body"></textarea>
-			<button id="submit" type="submit">Post</button>
-		</form>
-
 		<script src="/public/scripts/htmx.min"></script>
 	</body>
 </html>

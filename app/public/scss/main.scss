@@ -17,6 +17,7 @@
   width: 100vw;
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --main: #050609;
@@ -25,6 +26,17 @@
     --text: #faf9f6;
     --hover: #edebe4;
   }
+}
+
+#content {
+  min-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
 }
 
 #page-top {
@@ -86,7 +98,7 @@ h1 {
   /* Disable text wrapping */
   word-wrap: normal;
   transition: text-shadow 0.3s, background 0.3s, background-color 0.3s,
-    box-shadow 0.2s;
+  box-shadow 0.2s;
 }
 
 h1:hover {
