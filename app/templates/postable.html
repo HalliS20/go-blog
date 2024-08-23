@@ -1,87 +1,87 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Halli Dev</title>
-        <meta
-            content="Welcome to my dev blog. Here you will find the latest posts and updates on my work."
-            name="description"
-        />
-        <meta content="HalliS20" name="author" />
-        <meta
-            content="blog, posts, updates, dev, life, work, tech"
-            name="keywords"
-        />
-        <meta charset="UTF-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const unlock = document.getElementById("unlock")
+	<head>
+		<title>Halli Dev</title>
+		<meta
+			content="Welcome to my dev blog. Here you will find the latest posts and updates on my work."
+			name="description"
+		/>
+		<meta content="HalliS20" name="author" />
+		<meta
+			content="blog, posts, updates, dev, life, work, tech"
+			name="keywords"
+		/>
+		<meta charset="UTF-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const unlock = document.getElementById("unlock")
 
-                unlock.addEventListener("click", function () {
-                    const poster = document.getElementById("poster")
-                    poster.style.display = "flex"
-                })
-            })
-        </script>
-        <style>
-            {{.cssContent}}
-        </style>
-    </head>
-    <body>
-        <div id="page">
-            <div id="top-desc">
-                <div id="page-top">
-                    <button
-                        id="title-button"
-                        onclick="window.location.href='/'"
-                    >
-                        <h1>Halli Dev</h1>
-                    </button>
-                    <button id="unlock">
-                        <img alt="lock" src="/public/static/lock.svg" />
-                    </button>
-                </div>
-                <p id="main-description">
-                    Welcome to my blog I will be documenting my dev journey
-                    here, hope you enjoy and learn from my mistakes.
-                </p>
-            </div>
-            <div id="posts">
-                {{range .posts}}
+				unlock.addEventListener("click", function () {
+					const poster = document.getElementById("poster")
+					poster.style.display = "flex"
+				})
+			})
+		</script>
+		<style>
+			{{.cssContent}}
+		</style>
+	</head>
+	<body>
+		<div id="page">
+			<div id="top-desc">
+				<div id="page-top">
+					<button
+						id="title-button"
+						onclick="window.location.href='/'"
+					>
+						<h1>Halli Dev</h1>
+					</button>
+					<button id="unlock">
+						<img alt="lock" src="/public/static/lock.svg" />
+					</button>
+				</div>
+				<p id="main-description">
+					Welcome to my blog I will be documenting my dev mistakes
+					here, hope it will help you.
+				</p>
+			</div>
+			<div id="posts">
+				{{range .posts}}
 
-                <button
-                    onclick="window.location.href='/posts/' + {{.ID}}"
-                    class="post-button"
-                >
-                    <article class="post-article">
-                        <div class="post-top">
-                            <h2>{{.Title}}</h2>
-                            <p class="date">{{.Date}}</p>
-                        </div>
-                        <p>{{.Description}}</p>
-                    </article>
-                </button>
-                {{end}}
-            </div>
-        </div>
-        <form
-            hx-post="/post"
-            hx-target="#posts"
-            hx-trigger="submit"
-            id="poster"
-        >
-            <label for="password">Password</label>
-            <input id="password" name="password" type="text" />
-            <label for="title">Title</label>
-            <input id="title" name="title" type="text" />
-            <label for="description">Description</label>
-            <textarea id="description" name="description"></textarea>
-            <label for="body">Body</label>
-            <textarea id="body" name="body"></textarea>
-            <button id="submit" type="submit">Post</button>
-        </form>
+				<button
+					onclick="window.location.href='/posts/' + {{.ID}}"
+					class="post-button"
+				>
+					<article class="post-article">
+						<div class="post-top">
+							<h2>{{.Title}}</h2>
+							<p class="date">{{.Date}}</p>
+						</div>
+						<p>{{.Description}}</p>
+					</article>
+				</button>
+				{{end}}
+			</div>
+		</div>
+		<form
+			hx-post="/post"
+			hx-target="#posts"
+			hx-trigger="submit"
+			id="poster"
+		>
+			<label for="password">Password</label>
+			<input id="password" name="password" type="text" />
+			<label for="title">Title</label>
+			<input id="title" name="title" type="text" />
+			<label for="description">Description</label>
+			<textarea id="description" name="description"></textarea>
+			<label for="body">Body</label>
+			<textarea id="body" name="body"></textarea>
+			<button id="submit" type="submit">Post</button>
+		</form>
 
-        <script src="/public/scripts/htmx.min"></script>
-    </body>
+		<script src="/public/scripts/htmx.min"></script>
+	</body>
 </html>
