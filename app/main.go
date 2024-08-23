@@ -3,13 +3,14 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/gin-contrib/gzip"
-	"github.com/russross/blackfriday/v2"
 	"go-blog/service"
 	"html/template"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/gin-contrib/gzip"
+	"github.com/russross/blackfriday/v2"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -21,44 +22,9 @@ var (
 	e     *gin.Engine
 )
 
-func readFile(filePath string) (string, error) {
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		return "", err
-	}
-	return string(content), nil
-}
-
-func getCSS() (template.CSS, template.CSS, template.CSS, error) {
-	cssMain, err := readFile("./public/styling/main.css")
-	if err != nil {
-		return "", "", "", err
-	}
-	cssPost, err := readFile("./public/styling/post.css")
-	if err != nil {
-		return "", "", "", err
-	}
-	cssPostable, err := readFile("./public/styling/postable.css")
-	if err != nil {
-		return "", "", "", err
-	}
-
-	safeCssMain := template.CSS(cssMain)
-	safeCssPost := template.CSS(cssPost)
-	safeCssPostable := template.CSS(cssPostable)
-	return safeCssMain, safeCssPost, safeCssPostable, nil
-}
-
-func loadEnv() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-}
-
 func main() {
-	//Initialize the database
-	loadEnv()
+	// Initialize the database
+	// loadEnv()
 	service.InitDatabase()
 	defer func(Db *sql.DB) {
 		err := Db.Close()
@@ -86,7 +52,6 @@ func initializeServer() {
 	e.LoadHTMLGlob("templates/*")
 	e.StaticFile("/favicon.ico", "./public/static/favicon.ico")
 	e.Static("/styling", "./public/styling")
-
 }
 
 func setRoutes() {
@@ -176,4 +141,39 @@ func sendPost(c *gin.Context) {
 	service.CreateBlogPost(post)
 	c.JSON(200, gin.H{"status": "posted"})
 	posts = service.GetBlogPosts()
+}
+
+func readFile(filePath string) (string, error) {
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+}
+
+func getCSS() (template.CSS, template.CSS, template.CSS, error) {
+	cssMain, err := readFile("./public/styling/main.css")
+	if err != nil {
+		return "", "", "", err
+	}
+	cssPost, err := readFile("./public/styling/post.css")
+	if err != nil {
+		return "", "", "", err
+	}
+	cssPostable, err := readFile("./public/styling/postable.css")
+	if err != nil {
+		return "", "", "", err
+	}
+
+	safeCssMain := template.CSS(cssMain)
+	safeCssPost := template.CSS(cssPost)
+	safeCssPostable := template.CSS(cssPostable)
+	return safeCssMain, safeCssPost, safeCssPostable, nil
+}
+
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
 }
