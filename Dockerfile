@@ -13,10 +13,12 @@ RUN go mod download
 COPY app/ .
 
 # Install sqlite3 and its development libraries
-RUN apt-get update && apt-get install -y gcc sqlite3 libsqlite3-dev
+RUN apt-get update && apt-get install -y gcc
 
 # Build the Go application
-RUN CGO_ENABLED=1 GOOS=linux go build -o main -tags sqlite_fts5 .
+RUN CGO_ENABLED=1 GOOS=linux go build -o main
+
+EXPOSE 8080
 
 # Set the entry point for the container
 CMD ["/app/main"]
