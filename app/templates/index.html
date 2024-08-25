@@ -31,10 +31,14 @@
 							<h2>journal</h2>
 						</button>
 					</div>
-					<p id="main-description">
-						Journal of a deluded dev, with an unhealthy obsession
-						for <b>SEO</b> and <b>SPEED</b> (the concept).
-					</p>
+					<div id="main-description">
+						<p>
+							Journal of a deluded dev, with an unhealthy
+							obsession for <b>SEO</b> and <b>SPEED</b> (the
+							concept).
+						</p>
+						<div class="line"></div>
+					</div>
 				</div>
 				<div id="posts">
 					{{range .posts}}
@@ -47,6 +51,7 @@
 							</div>
 							<p>{{.Description}}</p>
 						</article>
+						<div class="line"></div>
 					</button>
 					{{end}}
 				</div>

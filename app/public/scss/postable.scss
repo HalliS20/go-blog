@@ -2,7 +2,7 @@
 
 @media (prefers-color-scheme: dark) {
   img {
-    filter: invert(0);
+    filter: brightness(0) saturate(100%) invert(4%) sepia(10%) saturate(848%) hue-rotate(169deg) brightness(97%) contrast(88%);
   }
 
   #unlock:hover img {
@@ -12,7 +12,7 @@
 
 @media (prefers-color-scheme: light) {
   img {
-    filter: invert(1);
+    filter: invert(95%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(98%) contrast(102%);
   }
 
   #unlock:hover img {

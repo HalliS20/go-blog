@@ -1,0 +1,33 @@
+/* --main: #faf9f6; */
+/* --main2: white; */
+/* --main2: #000612; */
+/* --gradColor1: #2f4afa; */
+:root {
+  --main: #f8f8ff;
+  --main2: #f8f8ff;
+  --btn: #f8f8ff;
+  --text: #050609;
+  --hover: #eeeef5;
+  --bolds: #3F00FF;
+  --gradColor1: deepskyblue;
+  --gradColor2: #3F00FF;
+  --gradient: linear-gradient(30deg, var(--gradColor1), var(--gradColor2));
+  --back: linear-gradient(0deg, var(--main), var(--main2));
+  --radius: 3px;
+  background-color: var(--main2);
+  width: 100vw;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main2: #181a1b;
+    --main: #181a1b;
+    --btn: #181a1b;
+    --hover: #222425;
+    --text: #f8f8ff;
+    --gradColor2: lightblue;
+    --bolds: deepskyblue;
+  }
+}
+
+/*# sourceMappingURL=variables.css.map */

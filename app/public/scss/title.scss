@@ -1,0 +1,117 @@
+#top-desc {
+  width: 100%;
+  margin-top: 40px;
+
+  #page-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    #title-button {
+      padding: 10px;
+      margin: 0 0 20px 0;
+      background: 0;
+      border: 0;
+      color: var(--text);
+      font-size: 1.5em;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      justify-content: flex-end;
+      align-items: flex-end;
+
+      h1 {
+        margin: 0 10px 0 0;
+        /* color: var(--text); */
+        background: var(--gradient);
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        text-shadow: 0 0 5px var(--gradient);
+        border-bottom: 1px solid var(--text);
+        width: min-content;
+        white-space: pre;
+        overflow-wrap: normal;
+        word-wrap: normal;
+        transition: text-shadow 0.3s, background 0.3s, background-color 0.3s,
+          box-shadow 0.2s, border-bottom 0.3s;
+
+        &:hover {
+          cursor: pointer;
+          box-shadow: 0 5px 5px -6px var(--text);
+          text-shadow: 0 0 5px var(--text);
+          border-bottom: 1px solid var(--text);
+        }
+      }
+
+
+      h2 {
+        font-size: 0.8em;
+        padding-bottom: 10px;
+        margin: 0 0 0 0;
+        width: min-content;
+        border-bottom: 1px solid var(--text);
+        /* border-bottom: 1px solid transparent; */
+        white-space: pre;
+        overflow-wrap: normal;
+        word-wrap: normal;
+        transition: text-shadow 0.3s, background 0.3s, background-color 0.3s,
+          box-shadow 0.2s, border-bottom 0.3s;
+
+        &:hover {
+          cursor: pointer;
+          text-shadow: 0 0 6px var(--text);
+          border-bottom: 1px solid var(--text);
+          box-shadow: 0 5px 5px -6px var(--text);
+        }
+      }
+
+    }
+  }
+
+
+  #main-description {
+    white-space: nowrap;
+    /* Preserve whitespace */
+    overflow-wrap: normal;
+    /* Disable text wrapping */
+    word-wrap: normal;
+    text-decoration: none;
+    font-size: 1.1em;
+
+    p {
+      padding: 10px;
+      border-radius: var(--radius);
+      transition: background-color 0.3s, box-shadow 0.3s, text-shadow 0.3s, border-top 0.3s, border-left 0.3s, border-right 0.3s;
+      margin: 0;
+    }
+
+    b {
+      color: var(--bolds);
+      transition: text-shadow 0.3s;
+      text-shadow: 0 0 0 var(--bolds);
+    }
+
+    .line {
+      width: 100%;
+      border-bottom: 1px solid var(--text);
+      transition: width 0.3s;
+      margin-top: 5px;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      p {
+        text-shadow: -1px 0 0 var(--text);
+        background-color: var(--hover);
+      }
+
+      b {
+        text-shadow: -1px 0 0 var(--bolds);
+      }
+
+    }
+  }
+}
