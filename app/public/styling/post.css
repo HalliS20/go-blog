@@ -25,8 +25,8 @@
     --btn: #181a1b;
     --hover: #222425;
     --text: #f8f8ff;
-    --gradColor2: lightblue;
-    --bolds: deepskyblue;
+    /* --gradColor2: lightblue; */
+    /* --bolds: deepskyblue; */
   }
 }
 #top-desc {
@@ -155,8 +155,8 @@
     --btn: #181a1b;
     --hover: #222425;
     --text: #f8f8ff;
-    --gradColor2: lightblue;
-    --bolds: deepskyblue;
+    /* --gradColor2: lightblue; */
+    /* --bolds: deepskyblue; */
   }
 }
 #posts {
@@ -300,8 +300,8 @@ html body #content #page {
     --btn: #181a1b;
     --hover: #222425;
     --text: #f8f8ff;
-    --gradColor2: lightblue;
-    --bolds: deepskyblue;
+    /* --gradColor2: lightblue; */
+    /* --bolds: deepskyblue; */
   }
 }
 * {
