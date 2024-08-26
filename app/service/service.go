@@ -3,6 +3,7 @@ package service
 
 import (
 	"database/sql"
+	"go-blog/models"
 	"log"
 	"os"
 	"time"
@@ -10,15 +11,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type BlogPost struct {
-	ID          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Body        string `json:"body"`
-	Date        string `json:"date"`
-}
-
 var Db *sql.DB
+
+type BlogPost = models.BlogPost
 
 func InitDatabase() {
 	user := "Blog_owner"
@@ -28,6 +23,10 @@ func InitDatabase() {
 	Db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if err = Db.Ping(); err != nil {
+		log.Fatal("Error connecting to the database:", err)
 	}
 
 	_, err = Db.Exec(`CREATE TABLE IF NOT EXISTS posts (
@@ -73,5 +72,14 @@ func CreateBlogPost(post BlogPost) {
 	_, err := Db.Exec("INSERT INTO posts (title, description, body) VALUES ($1, $2, $3)", post.Title, post.Description, post.Body)
 	if err != nil {
 		log.Fatal("Error inserting post: ", err)
+	}
+}
+
+func CloseDatabase() {
+	if Db != nil {
+		err := Db.Close()
+		if err != nil {
+			log.Println("Error closing database connection:", err)
+		}
 	}
 }
