@@ -10,6 +10,7 @@ func Init(e *gin.Engine) {
 	ctrl.Init()
 	setRoutes(e)
 
+	//======= shuts down the database connection when the server is stopped
 	defer ctrl.Shutdown()
 }
 
@@ -22,4 +23,8 @@ func setRoutes(e *gin.Engine) {
 	e.GET("/public/*filepath", func(c *gin.Context) {
 		c.File("public/" + c.Param("filepath"))
 	}) // serve static files
+}
+
+func Shutdown() {
+	ctrl.Shutdown()
 }

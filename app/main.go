@@ -32,6 +32,8 @@ func main() {
 
 	router.Init(e)
 
+	//======== Shutdown the all layers when the server is closed
+	defer router.Shutdown()
 	//======== Run the server
 	err := e.Run(":8080")
 	if err != nil {
