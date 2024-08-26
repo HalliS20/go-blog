@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"go-blog/models"
-	"go-blog/service"
+	"go-blog/internal/models"
+	"go-blog/internal/service"
 	"html/template"
 
 	"github.com/gin-gonic/gin"

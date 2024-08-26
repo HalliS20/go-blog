@@ -1,10 +1,9 @@
 package main
 
 import (
-	"go-blog/models"
-	"go-blog/router"
-
 	"github.com/gin-contrib/gzip"
+	"go-blog/internal/models"
+	"go-blog/internal/router"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"

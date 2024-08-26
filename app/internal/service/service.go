@@ -3,7 +3,7 @@ package service
 
 import (
 	"database/sql"
-	"go-blog/models"
+	"go-blog/internal/models"
 	"log"
 	"os"
 	"time"

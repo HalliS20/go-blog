@@ -1,7 +1,7 @@
 package router
 
 import (
-	ctrl "go-blog/controller"
+	ctrl "go-blog/internal/controller"
 
 	"github.com/gin-gonic/gin"
 )

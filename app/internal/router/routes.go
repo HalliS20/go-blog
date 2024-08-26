@@ -1,8 +1,8 @@
 package router
 
 import (
-	ctrl "go-blog/controller"
-	"go-blog/models"
+	"go-blog/internal/controller"
+	"go-blog/internal/models"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +11,12 @@ import (
 
 func showPosts(c *gin.Context) {
 	c.Header("Cache-Control", "no-cache")
-	c.HTML(200, "index.html", ctrl.GetMainData())
+	c.HTML(200, "index.html", controller.GetMainData())
 }
 
 func showPostable(c *gin.Context) {
 	c.Header("Cache-Control", "no-cache")
-	c.HTML(200, "postable.html", ctrl.GetPostableData())
+	c.HTML(200, "postable.html", controller.GetPostableData())
 }
 
 func showPost(c *gin.Context) {
@@ -27,13 +27,13 @@ func showPost(c *gin.Context) {
 		return
 	}
 
-	post := ctrl.GetPost(id)
+	post := controller.GetPost(id)
 	if post == nil {
 		c.JSON(404, gin.H{"error": "Post not found"})
 		return
 	}
 
-	c.HTML(200, "post.html", ctrl.GetPostData(post))
+	c.HTML(200, "post.html", controller.GetPostData(post))
 }
 
 func sendPost(c *gin.Context) {
@@ -42,7 +42,7 @@ func sendPost(c *gin.Context) {
 	description := c.PostForm("description")
 	password := c.PostForm("password")
 
-	if !ctrl.CheckPassword(password) {
+	if !controller.CheckPassword(password) {
 		c.JSON(401, gin.H{"error": "Incorrect password"})
 		return
 	}
@@ -50,6 +50,6 @@ func sendPost(c *gin.Context) {
 	bodyMarkdown := string(blackfriday.Run([]byte(body)))
 
 	post := models.MakeBlogPost(title, description, bodyMarkdown)
-	ctrl.AddPost(post)
+	controller.AddPost(post)
 	c.JSON(200, gin.H{"status": "posted"})
 }
