@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/base64"
 	"fmt"
 	"go-blog/service"
 	"html/template"
@@ -18,8 +19,9 @@ import (
 )
 
 var (
-	posts []service.BlogPost
-	e     *gin.Engine
+	posts       []service.BlogPost
+	e           *gin.Engine
+	faviconData string
 )
 
 func main() {
@@ -50,8 +52,13 @@ func initializeServer() {
 	e = gin.Default()
 	e.Use(gzip.Gzip(gzip.DefaultCompression)) // use gzip for text compression
 	e.LoadHTMLGlob("templates/*")
-	e.StaticFile("/favicon.ico", "./public/static/favicon.ico")
-	e.Static("/styling", "./public/styling")
+	// e.Static("/styling", "./public/styling")
+
+	faviconBytes, err := os.ReadFile("./public/static/favicon.ico")
+	if err != nil {
+		log.Fatal("Error reading favicon: ", err)
+	}
+	faviconData = base64.StdEncoding.EncodeToString(faviconBytes)
 }
 
 func setRoutes() {
@@ -78,18 +85,20 @@ func setRoutes() {
 func showPosts(c *gin.Context, cssMain template.CSS, jsMain template.JS) {
 	c.Header("Cache-Control", "no-cache")
 	c.HTML(200, "index.html", gin.H{
-		"posts":      posts,
-		"cssContent": cssMain,
-		"jsFile":     jsMain,
+		"posts":       posts,
+		"cssContent":  cssMain,
+		"jsFile":      jsMain,
+		"faviconData": faviconData,
 	})
 }
 
 func showPostable(c *gin.Context, cssPostable template.CSS, jsMain template.JS) {
 	c.Header("Cache-Control", "no-cache")
 	c.HTML(200, "postable.html", gin.H{
-		"posts":      posts,
-		"cssContent": cssPostable,
-		"jsFile":     jsMain,
+		"posts":       posts,
+		"cssContent":  cssPostable,
+		"jsFile":      jsMain,
+		"faviconData": faviconData,
 	})
 }
 
@@ -124,6 +133,7 @@ func showPost(c *gin.Context, cssPost template.CSS, jsMain template.JS) {
 		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
 		"cssContent":   cssPost,
 		"jsFile":       jsMain,
+		"faviconData":  faviconData,
 	})
 }
 
