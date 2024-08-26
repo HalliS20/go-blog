@@ -23,7 +23,3 @@ func setRoutes(e *gin.Engine) {
 		c.File("public/" + c.Param("filepath"))
 	}) // serve static files
 }
-
-func Shutdown() {
-	ctrl.Shutdown()
-}

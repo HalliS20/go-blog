@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gin-contrib/gzip"
 	"go-blog/internal/models"
 	"go-blog/internal/router"
+
+	"github.com/gin-contrib/gzip"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -31,7 +32,6 @@ func main() {
 
 	router.Init(e)
 
-	defer router.Shutdown()
 	//======== Run the server
 	err := e.Run(":8080")
 	if err != nil {
