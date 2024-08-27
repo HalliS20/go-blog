@@ -1,28 +1,17 @@
 package main
 
 import (
-	"go-blog/internal/router"
-	"log"
-
 	"github.com/gin-contrib/gzip"
+	"go-blog/internal/router"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 var e *gin.Engine
 
-func loadEnv() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-}
-
 func main() {
 	// Initialize the database
-	// loadEnv()
 
 	initializeServer()
 
