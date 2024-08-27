@@ -37,6 +37,10 @@ func InitDatabase() {
 		log.Fatal(err)
 	}
 
+	Db.SetMaxOpenConns(25)
+	Db.SetMaxIdleConns(5)
+	Db.SetConnMaxLifetime(5 * time.Minute)
+
 	if err = Db.Ping(); err != nil {
 		log.Fatal("Error connecting to the database:", err)
 	}

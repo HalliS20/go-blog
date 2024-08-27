@@ -11,7 +11,6 @@ func Init(e *gin.Engine) {
 	setRoutes(e)
 
 	//======= shuts down the database connection when the server is stopped
-	defer ctrl.Shutdown()
 }
 
 func setRoutes(e *gin.Engine) {
