@@ -1,0 +1,56 @@
+Dockerfile  [error opening dir]
+LICENSE  [error opening dir]
+README.md  [error opening dir]
+app
+├── air.toml
+├── go.mod
+├── go.sum
+├── internal
+│   ├── controller
+│   │   ├── controller.go
+│   │   └── fileOperations.go
+│   ├── models
+│   │   └── blog_post.go
+│   ├── router
+│   │   ├── router.go
+│   │   └── routes.go
+│   └── service
+│       └── service.go
+├── main.go
+├── public
+│   ├── scripts
+│   │   ├── htmx.min
+│   │   └── main.js
+│   ├── scss
+│   │   ├── main.scss
+│   │   ├── post.scss
+│   │   ├── postable.scss
+│   │   ├── postsList.scss
+│   │   ├── title.scss
+│   │   └── variables.scss
+│   ├── static
+│   │   ├── favicon.ico
+│   │   └── lock.svg
+│   └── styling
+│       ├── main.css
+│       ├── main.css.map
+│       ├── post.css
+│       ├── post.css.map
+│       ├── postable.css
+│       ├── postable.css.map
+│       ├── postsList.css
+│       ├── postsList.css.map
+│       ├── title.css
+│       ├── title.css.map
+│       ├── variables.css
+│       └── variables.css.map
+├── templates
+│   ├── index.html
+│   ├── post.html
+│   └── postable.html
+└── tmp
+    └── main
+fly.toml  [error opening dir]
+railway.toml  [error opening dir]
+
+13 directories, 41 files

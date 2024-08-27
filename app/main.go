@@ -3,26 +3,25 @@ package main
 import (
 	"go-blog/internal/models"
 	"go-blog/internal/router"
+	"log"
 
 	"github.com/gin-contrib/gzip"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	// "log"
-	//
-	// "github.com/joho/godotenv"
 )
 
 type BlogPost = models.BlogPost
 
 var e *gin.Engine
 
-// func loadEnv() {
-// 	err := godotenv.Load(".env")
-// 	if err != nil {
-// 		log.Fatalf("Error loading .env file")
-// 	}
-// }
+func loadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+}
 
 func main() {
 	// Initialize the database

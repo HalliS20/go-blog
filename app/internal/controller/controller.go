@@ -5,6 +5,8 @@ import (
 	"go-blog/internal/models"
 	"go-blog/internal/service"
 	"html/template"
+	"log"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -12,6 +14,7 @@ import (
 
 var (
 	posts       []models.BlogPost
+	postsMutex  sync.RWMutex
 	faviconData string
 	cssMain     template.CSS
 	cssPost     template.CSS
@@ -22,16 +25,30 @@ var (
 type BlogPost = models.BlogPost
 
 func Init() {
-	initializeDatabase()
+	service.InitDatabase()
 	getStaticFiles()
+	setupPostListener()
 }
 
 func Shutdown() {
 	service.CloseDatabase()
 }
 
-func initializeDatabase() {
-	service.InitDatabase()
+func setupPostListener() {
+	go func() {
+		ch := service.SetupListener()
+		for notification := range ch {
+			log.Println("Received notification:", notification)
+			updatePostsFromDB()
+		}
+	}()
+}
+
+func updatePostsFromDB() {
+	newPosts := service.GetBlogPosts()
+	postsMutex.Lock()
+	posts = newPosts
+	postsMutex.Unlock()
 }
 
 func getStaticFiles() {
@@ -44,6 +61,8 @@ func getStaticFiles() {
 }
 
 func GetMainData() gin.H {
+	postsMutex.RLock()
+	defer postsMutex.RUnlock()
 	return gin.H{
 		"cssContent":  cssMain,
 		"jsFile":      jsMain,
@@ -53,6 +72,8 @@ func GetMainData() gin.H {
 }
 
 func GetPostableData() gin.H {
+	postsMutex.RLock()
+	defer postsMutex.RUnlock()
 	return gin.H{
 		"cssContent":  cssPostable,
 		"jsFile":      jsMain,
@@ -77,10 +98,12 @@ func GetPostData(post *BlogPost) gin.H {
 
 func AddPost(post models.BlogPost) {
 	service.CreateBlogPost(post)
-	posts = service.GetBlogPosts()
 }
 
 func GetPost(id int) *BlogPost {
+	postsMutex.RLock()
+	defer postsMutex.RUnlock()
+
 	//==== Find the correct post
 	var post *BlogPost
 	for _, p := range posts {

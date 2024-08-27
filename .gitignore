@@ -8,3 +8,4 @@ app/.env
 node_modules
 .idea/*
 
+/app/tmp
