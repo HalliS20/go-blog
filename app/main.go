@@ -1,7 +1,6 @@
 package main
 
 import (
-	"go-blog/internal/models"
 	"go-blog/internal/router"
 	"log"
 
@@ -11,8 +10,6 @@ import (
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
-
-type BlogPost = models.BlogPost
 
 var e *gin.Engine
 
