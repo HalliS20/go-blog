@@ -9,3 +9,4 @@ node_modules
 .idea/*
 
 /app/tmp
+.cockroachSetup.go

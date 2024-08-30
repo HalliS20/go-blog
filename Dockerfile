@@ -1,4 +1,4 @@
-FROM golang:1.22
+FROM golang:1.22-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,8 +12,8 @@ RUN go mod download
 # Copy the rest of the application code
 COPY app/ .
 
-# Install sqlite3 and its development libraries
-RUN apt-get update && apt-get install -y gcc
+# Install gcc and its dependencies
+RUN apk add --no-cache gcc musl-dev
 
 # Build the Go application
 RUN CGO_ENABLED=1 GOOS=linux go build -o main
@@ -22,5 +22,3 @@ EXPOSE 8080
 
 # Set the entry point for the container
 CMD ["/app/main"]
-
-
