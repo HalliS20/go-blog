@@ -2,16 +2,21 @@ package main
 
 import (
 	"github.com/gin-contrib/gzip"
-	"go-blog/internal/router"
-
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
+	"go-blog/config"
+	"go-blog/internal/router"
+	"log"
 )
 
 var e *gin.Engine
 
 func main() {
 	// Initialize the database
+
+	if err := config.LoadConfig(); err != nil {
+		log.Fatalf("Error loading configuration: %v", err)
+	}
 
 	initializeServer()
 
