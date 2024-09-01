@@ -8,7 +8,7 @@
 		/>
 		<meta content="HalliS20" name="author" />
 		<meta
-			content="blog, posts, updates, dev, life, work, tech"
+			content="blog, posts, updates, dev, life, work, tech, performance blog, SEO friendly blog, SEO"
 			name="keywords"
 		/>
 		<meta charset="UTF-8" />
@@ -27,6 +27,7 @@
 				<div id="top-desc">
 					<div id="page-top">
 						<button id="title-button" data-href="/">
+							<a href="/" style="display: none"></a>
 							<h1>HDEV</h1>
 							<h2>journal</h2>
 						</button>
@@ -44,6 +45,7 @@
 					{{range .posts}}
 
 					<button data-href="/posts/{{.ID}}" class="post-button">
+						<a href="/posts/{{.ID}}" style="display: none"></a>
 						<article class="post-article">
 							<div class="post-top">
 								<h3>{{.Title}}</h3>
