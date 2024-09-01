@@ -6,21 +6,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Init(e *gin.Engine) {
+func Init(router *gin.Engine) {
 	ctrl.Init()
-	setRoutes(e)
+	setRoutes(router)
 
 	//======= shuts down the database connection when the server is stopped
 }
 
-func setRoutes(e *gin.Engine) {
-	e.GET("/", func(c *gin.Context) { showPosts(c) })            // home page (with posts)
-	e.GET("/posts", func(c *gin.Context) { showPosts(c) })       // show all posts
-	e.GET("/postable", func(c *gin.Context) { showPostable(c) }) // postable site
-	e.GET("/posts/:id", func(c *gin.Context) { showPost(c) })    // show a single post
-	e.POST("/posts", func(c *gin.Context) { sendPost(c) })       // send a post
-	e.GET("/sitemap.xml", func(c *gin.Context) { c.File("public/sitemap.xml") })
-	e.GET("/public/*filepath", func(c *gin.Context) {
+func setRoutes(router *gin.Engine) {
+	router.GET("/", func(c *gin.Context) { showPosts(c) })            // home page (with posts)
+	router.GET("/posts", func(c *gin.Context) { showPosts(c) })       // show all posts
+	router.GET("/postable", func(c *gin.Context) { showPostable(c) }) // postable site
+	router.GET("/posts/:id", func(c *gin.Context) { showPost(c) })    // show a single post
+	router.POST("/posts", func(c *gin.Context) { sendPost(c) })       // send a post
+	router.GET("/sitemap.xml", func(c *gin.Context) { c.File("public/sitemap.xml") })
+	router.GET("/public/*filepath", func(c *gin.Context) {
 		c.File("public/" + c.Param("filepath"))
 	}) // serve static files
 }
