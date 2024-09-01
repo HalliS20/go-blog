@@ -19,6 +19,7 @@ func setRoutes(e *gin.Engine) {
 	e.GET("/postable", func(c *gin.Context) { showPostable(c) }) // postable site
 	e.GET("/posts/:id", func(c *gin.Context) { showPost(c) })    // show a single post
 	e.POST("/posts", func(c *gin.Context) { sendPost(c) })       // send a post
+	e.GET("/sitemap.xml", func(c *gin.Context) { c.File("public/sitemap.xml") })
 	e.GET("/public/*filepath", func(c *gin.Context) {
 		c.File("public/" + c.Param("filepath"))
 	}) // serve static files
