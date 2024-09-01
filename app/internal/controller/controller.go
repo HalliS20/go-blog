@@ -5,7 +5,6 @@ import (
 	"go-blog/internal/models"
 	"go-blog/internal/service"
 	"html/template"
-	"log"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -27,21 +26,10 @@ type BlogPost = models.BlogPost
 func Init() {
 	service.InitDatabase()
 	getStaticFiles()
-	setupPostListener()
 }
 
 func Shutdown() {
 	service.CloseDatabase()
-}
-
-func setupPostListener() {
-	go func() {
-		ch := service.SetupListener()
-		for notification := range ch {
-			log.Println("Received notification:", notification)
-			updatePostsFromDB()
-		}
-	}()
 }
 
 func updatePostsFromDB() {
@@ -98,6 +86,7 @@ func GetPostData(post *BlogPost) gin.H {
 
 func AddPost(post models.BlogPost) {
 	service.CreateBlogPost(post)
+	updatePostsFromDB()
 }
 
 func GetPost(id int) *BlogPost {

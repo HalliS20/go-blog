@@ -8,6 +8,10 @@ type BlogPost struct {
 	Date        string `json:"date"`
 }
 
+func (BlogPost) TableName() string {
+	return "posts"
+}
+
 func MakeBlogPost(title string, description string, body string) BlogPost {
 	return BlogPost{
 		Title:       title,
