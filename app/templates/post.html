@@ -1,51 +1,46 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			content="blog, posts, updates, dev, life, work, tech"
-			name="keywords"
-		/>
-		<meta content="HalliS20" name="author" />
-		<meta content="{{.description}}" name="description" />
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-		<link rel="icon" href="data:image/x-icon;base64,{{.faviconData}}" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta
+            content="blog, posts, updates, dev, life, work, tech"
+            name="keywords"
+    />
+    <meta content="HalliS20" name="author"/>
+    <meta content="{{.description}}" name="description"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="/public/static/favicon.ico" rel="icon"/>
+    <title>{{ .title }}</title>
+    <link href="{{ .faviconName }}" rel="icon"/>
+    <link href="{{ .canonicalURL }}" rel="canonical"/>
+    <link href="{{ .cssName }}" media="print" onload="this.media='all'" rel="stylesheet"/>
+    <script defer src="{{ .jsName }}"></script>
+</head>
+<body>
+<div id="content">
+    <div id="page">
+        <div id="top-desc">
+            <div id="page-top">
+                <button data-href="/" id="title-button">
+                    <a href="/" style="display: none"></a>
+                    <h1>HDEV</h1>
+                    <h2>journal</h2>
+                </button>
+            </div>
+        </div>
 
-		<title>{{ .title }}</title>
-
-		<link href="{{ .canonicalURL }}" rel="canonical" />
-		<style>
-			{{.cssContent}}
-		</style>
-		<script>
-			{{.jsFile}}
-		</script>
-	</head>
-	<body>
-		<div id="content">
-			<div id="page">
-				<div id="top-desc">
-					<div id="page-top">
-						<button id="title-button" data-href="/">
-							<a href="/" style="display: none"></a>
-							<h1>HDEV</h1>
-							<h2>journal</h2>
-						</button>
-					</div>
-				</div>
-
-				<article id="blog-article">
-					<div class="article-top">
-						<h3>{{.post.Title}}</h3>
-						<p class="date">{{.post.Date}}</p>
-					</div>
-					<div class="article-parent">
-						<div class="article-body">
-							<p>{{.body}}</p>
-						</div>
-					</div>
-				</article>
-			</div>
-		</div>
-	</body>
+        <article id="blog-article">
+            <div class="article-top">
+                <h3>{{.post.Title}}</h3>
+                <p class="date">{{.post.Date}}</p>
+            </div>
+            <div class="article-parent">
+                <div class="article-body">
+                    <p>{{.body}}</p>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+</body>
 </html>

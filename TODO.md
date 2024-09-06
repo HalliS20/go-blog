@@ -4,5 +4,15 @@
 - move all i/o operations to services
 - add Redis/dragonfly cache
 - add LISTEN/NOTIFY for real-time updates
-- maybe add tests
 
+- only re-render needed parts of the page + header
+    - find way to fetch just required resources
+
+- Check out
+    - JWT-Go: For JSON Web Token authentication
+    - Viper: For configuration management
+    - Logrus: For structured logging
+- maybe check out go-Swagger
+
+
+- maybe add tests

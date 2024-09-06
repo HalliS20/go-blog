@@ -14,11 +14,9 @@ import (
 var (
 	posts       []models.BlogPost
 	postsMutex  sync.RWMutex
-	faviconData string
-	cssMain     template.CSS
-	cssPost     template.CSS
-	cssPostable template.CSS
-	jsMain      template.JS
+	cssName     string
+	jsName      string
+	faviconName string
 )
 
 type BlogPost = models.BlogPost
@@ -26,6 +24,7 @@ type BlogPost = models.BlogPost
 func Init() {
 	service.InitDatabase()
 	getStaticFiles()
+
 }
 
 func Shutdown() {
@@ -40,22 +39,21 @@ func updatePostsFromDB() {
 }
 
 func getStaticFiles() {
+	cssName = "/public/styling/total.css"
+	jsName = "/public/scripts/main.js"
+	faviconName = "/public/static/favicon.ico"
 	posts = service.GetBlogPosts()
-	cssMain = getCSS("main.css")
-	cssPost = getCSS("post.css")
-	cssPostable = getCSS("postable.css")
-	jsMain = getJS("main.js")
-	faviconData = getFaviconData()
 }
 
 func GetMainData() gin.H {
 	postsMutex.RLock()
 	defer postsMutex.RUnlock()
 	return gin.H{
-		"cssContent":  cssMain,
-		"jsFile":      jsMain,
-		"faviconData": faviconData,
-		"posts":       posts,
+		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts"),
+		"cssName":      cssName,
+		"jsName":       jsName,
+		"faviconName":  faviconName,
+		"posts":        posts,
 	}
 }
 
@@ -63,24 +61,25 @@ func GetPostableData() gin.H {
 	postsMutex.RLock()
 	defer postsMutex.RUnlock()
 	return gin.H{
-		"cssContent":  cssPostable,
-		"jsFile":      jsMain,
-		"faviconData": faviconData,
-		"posts":       posts,
+		"canonicalURL": fmt.Sprintf("https://localhost:8080/postable"),
+		"cssName":      cssName,
+		"jsName":       jsName,
+		"posts":        posts,
+		"faviconName":  faviconName,
 	}
 }
 
 func GetPostData(post *BlogPost) gin.H {
 	safeBody := template.HTML(post.Body)
 	return gin.H{
-		"cssContent":   cssPost,
-		"jsFile":       jsMain,
-		"faviconData":  faviconData,
 		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
+		"cssName":      cssName,
+		"jsName":       jsName,
 		"post":         post,
 		"title":        post.Title,
 		"description":  post.Description,
 		"body":         safeBody,
+		"faviconName":  faviconName,
 	}
 }
 

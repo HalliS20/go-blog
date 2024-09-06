@@ -9,8 +9,6 @@ import (
 func Init(router *gin.Engine) {
 	ctrl.Init()
 	setRoutes(router)
-
-	//======= shuts down the database connection when the server is stopped
 }
 
 func setRoutes(router *gin.Engine) {
