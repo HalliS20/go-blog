@@ -39,8 +39,8 @@ func updatePostsFromDB() {
 }
 
 func getStaticFiles() {
-	cssName = "/public/styling/total.css"
-	jsName = "/public/scripts/main.js"
+	cssName = "/public/miniStyles/main.min.css"
+	jsName = "/public/scripts/main.min.js"
 	faviconName = "/public/static/favicon.ico"
 	posts = service.GetBlogPosts()
 }
