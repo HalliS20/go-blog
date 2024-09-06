@@ -15,6 +15,7 @@ var (
 	posts       []models.BlogPost
 	postsMutex  sync.RWMutex
 	cssName     string
+	cssData     template.CSS
 	jsName      string
 	faviconName string
 )
@@ -39,7 +40,8 @@ func updatePostsFromDB() {
 }
 
 func getStaticFiles() {
-	cssName = "/public/miniStyles/main.min.css"
+	cssName = "/public/miniStyles/total.min.css"
+	cssData = getCSS("main.min.css")
 	jsName = "/public/scripts/main.min.js"
 	faviconName = "/public/static/favicon.ico"
 	posts = service.GetBlogPosts()
@@ -51,6 +53,7 @@ func GetMainData() gin.H {
 	return gin.H{
 		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts"),
 		"cssName":      cssName,
+		"cssData":      cssData,
 		"jsName":       jsName,
 		"faviconName":  faviconName,
 		"posts":        posts,

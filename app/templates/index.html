@@ -1,60 +1,68 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <title>HDEV</title>
-    <meta
-            content="Welcome to my dev blog. Here you will find the latest posts and updates on my work."
-            name="description"
-    />
-    <meta content="HalliS20" name="author"/>
-    <meta
-            content="blog, posts, updates, dev, life, work, tech, performance blog, SEO friendly blog, SEO"
-            name="keywords"
-    />
-    <meta charset="UTF-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link href="{{ .faviconName }}" rel="icon"/>
-    <link href="{{ .canonicalURL }}" rel="canonical"/>
-    <link href="{{ .cssName }}" media="print" onload="this.media='all'" rel="stylesheet"/>
-    <script defer src="{{ .jsName }}"></script>
-</head>
-<body>
-<div id="content">
-    <div id="page">
-        <div id="top-desc">
-            <div id="page-top">
-                <button data-href="/" id="title-button">
-                    <a href="/" style="display: none"></a>
-                    <h1>HDEV</h1>
-                    <h2>journal</h2>
-                </button>
-            </div>
-            <div id="main-description">
-                <p>
-                    Journal of a deluded dev, with an unhealthy
-                    obsession for <b>SEO</b> and <b>SPEED</b> (the
-                    concept).
-                </p>
-                <div class="line"></div>
-            </div>
-        </div>
-        <div id="posts">
-            {{range .posts}}
+	<head>
+		<title>HDEV</title>
+		<meta
+			content="Welcome to my dev blog. Here you will find the latest posts and updates on my work."
+			name="description"
+		/>
+		<meta content="HalliS20" name="author" />
+		<meta
+			content="blog, posts, updates, dev, life, work, tech, performance blog, SEO friendly blog, SEO"
+			name="keywords"
+		/>
+		<meta charset="UTF-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<link href="{{ .faviconName }}" rel="icon" />
+		<link href="{{ .canonicalURL }}" rel="canonical" />
+		<link
+			href="{{ .cssName }}"
+			media="print"
+			onload="this.media='all'"
+			rel="stylesheet"
+		/>
+		<script defer src="{{ .jsName }}"></script>
+		<style>
+			{{ .cssData }}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<div id="page">
+				<div id="top-desc">
+					<div id="page-top">
+						<button data-href="/" id="title-button">
+							<a href="/" style="display: none"></a>
+							<h1>HDEV</h1>
+							<h2>journal</h2>
+						</button>
+					</div>
+					<div id="main-description">
+						<p>
+							Journal of a deluded dev, with an unhealthy
+							obsession for <b>SEO</b> and <b>SPEED</b> (the
+							concept).
+						</p>
+						<div class="line"></div>
+					</div>
+				</div>
+				<div id="posts">
+					{{range .posts}}
 
-            <button class="post-button" data-href="/posts/{{.ID}}">
-                <a href="/posts/{{.ID}}" style="display: none"></a>
-                <article class="post-article">
-                    <div class="post-top">
-                        <h3>{{.Title}}</h3>
-                        <p class="date">{{.Date}}</p>
-                    </div>
-                    <p>{{.Description}}</p>
-                </article>
-                <div class="line"></div>
-            </button>
-            {{end}}
-        </div>
-    </div>
-</div>
-</body>
+					<button class="post-button" data-href="/posts/{{.ID}}">
+						<a href="/posts/{{.ID}}" style="display: none"></a>
+						<article class="post-article">
+							<div class="post-top">
+								<h3>{{.Title}}</h3>
+								<p class="date">{{.Date}}</p>
+							</div>
+							<p>{{.Description}}</p>
+						</article>
+						<div class="line"></div>
+					</button>
+					{{end}}
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
