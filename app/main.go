@@ -37,7 +37,7 @@ func initializeServer() {
 	e.Use(gzip.Gzip(gzip.DefaultCompression)) // use gzip for text compression
 	e.LoadHTMLGlob("templates/*")
 	e.Use(func(c *gin.Context) {
-		if c.Request.URL.Path == "/public/miniStyles/main.min.css" || c.Request.URL.Path == "/public/scripts/main.min.js" {
+		if c.Request.URL.Path == "/public/miniStyles/total.min.css" || c.Request.URL.Path == "/public/scripts/main.min.js" {
 			c.Header("Cache-Control", "public, max-age=31536000") // Cache for 1 year
 		}
 		c.Next()
