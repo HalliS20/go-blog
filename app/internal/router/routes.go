@@ -10,12 +10,12 @@ import (
 )
 
 func showPosts(c *gin.Context) {
-	c.Header("Cache-Control", "no-cache")
+	c.Header("Cache-Control", "public, max-age=172800")
 	c.HTML(200, "index.html", controller.GetMainData())
 }
 
 func showPostable(c *gin.Context) {
-	c.Header("Cache-Control", "no-cache")
+	c.Header("Cache-Control", "public, max-age=172800")
 	c.HTML(200, "postable.html", controller.GetPostableData())
 }
 
@@ -33,6 +33,7 @@ func showPost(c *gin.Context) {
 		return
 	}
 
+	c.Header("Cache-Control", "public, max-age=172800")
 	c.HTML(200, "post.html", controller.GetPostData(post))
 }
 
