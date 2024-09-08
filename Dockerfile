@@ -16,7 +16,7 @@ COPY app/ .
 RUN apk add --no-cache gcc musl-dev
 
 # Build the Go application
-RUN CGO_ENABLED=1 GOOS=linux go build -ldflags="-s -w" -o main .
+RUN CGO_ENABLED=1 GOOS=linux go build -o main .
 
 EXPOSE 8080
 
