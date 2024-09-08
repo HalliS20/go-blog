@@ -1,10 +1,6 @@
-# fly.toml app configuration file generated for go-blog on 2024-08-27T13:45:17Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'go-blog'
-primary_region = 'ams'
+# fly.toml app configuration file
+app = "go-blog"
+primary_region = "ams"
 
 [build]
 dockerfile = "Dockerfile"
@@ -29,11 +25,17 @@ method = "GET"
 timeout = "5s"
 path = "/healthz"
 
-[[http_service.http_options]]
-h2_backend = true  # This enables HTTP/2 backend support
-http3 = true       # This enables HTTP/3
+[http_service.tls]
+alpn = ["h2", "h3"]
 
-
+[checks]
+[checks.alive]
+type = "tcp"
+interval = "15s"
+timeout = "2s"
+grace_period = "5s"
 
 [[vm]]
-size = 'shared-cpu-1x'
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 1024
