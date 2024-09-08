@@ -18,7 +18,13 @@ RUN apk add --no-cache gcc musl-dev
 # Build the Go application
 RUN CGO_ENABLED=1 GOOS=linux go build -o main .
 
-EXPOSE 8080
+# Expose both TCP and UDP on port 443
+EXPOSE 443/tcp
+EXPOSE 443/udp
+
+# Expose port 8080 for HTTP (if needed)
+EXPOSE 8080/tcp
+
 
 # Set the entry point for the container
 CMD ["/app/main"]
