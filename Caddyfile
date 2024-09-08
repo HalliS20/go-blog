@@ -1,0 +1,5 @@
+hdev.blog {
+    reverse_proxy / http://localhost:8080
+    encode gzip
+    tls hallist@hey.com
+}
