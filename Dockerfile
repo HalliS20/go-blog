@@ -1,4 +1,4 @@
-FROM golang:1.22-alpine
+FROM golang:1.22-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -16,15 +16,19 @@ COPY app/ .
 RUN apk add --no-cache gcc musl-dev
 
 # Build the Go application
-RUN CGO_ENABLED=1 GOOS=linux go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-# Expose both TCP and UDP on port 443
-EXPOSE 443/tcp
-EXPOSE 443/udp
+FROM alpine:latest
 
-# Expose port 8080 for HTTP (if needed)
-EXPOSE 8080/tcp
+WORKDIR /root/
 
+# Copy the pre-built binary file from the previous stage
+COPY --from=builder /app/main .
+COPY app/templates /root/templates
+COPY app/public /root/public
 
-# Set the entry point for the container
-CMD ["/app/main"]
+# Expose port 8080
+EXPOSE 8080
+
+# Command to run both the Go application and Caddy
+CMD ["./main"]
