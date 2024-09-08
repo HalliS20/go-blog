@@ -7,14 +7,33 @@ app = 'go-blog'
 primary_region = 'ams'
 
 [build]
+dockerfile = "Dockerfile"
 
 [http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 1
-  processes = ['app']
+internal_port = 8080
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 1
+processes = ['app']
+
+[http_service.concurrency]
+type = "connections"
+hard_limit = 1000
+soft_limit = 1000
+
+[[http_service.checks]]
+grace_period = "10s"
+interval = "30s"
+method = "GET"
+timeout = "5s"
+path = "/healthz"
+
+[[http_service.http_options]]
+h2_backend = true  # This enables HTTP/2 backend support
+http3 = true       # This enables HTTP/3
+
+
 
 [[vm]]
-  size = 'shared-cpu-1x'
+size = 'shared-cpu-1x'
