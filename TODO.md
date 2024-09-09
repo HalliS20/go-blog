@@ -6,6 +6,7 @@
 - 2. move all i/o operations to services
 - 3. add LISTEN/NOTIFY for real-time updates
 - 4. add Redis/dragonfly cache
+- 5. implement http/3
 
 ### EXTRA
 
