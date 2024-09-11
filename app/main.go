@@ -1,9 +1,14 @@
 package main
 
 import (
-	"go-blog/config"
+	"go-blog/internal/config"
+	"go-blog/internal/controller"
+	"go-blog/internal/database"
+	"go-blog/internal/repositories"
 	"go-blog/internal/router"
+	"go-blog/internal/service"
 	"log"
+	"os"
 
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -19,14 +24,27 @@ func main() {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
 
+	connStr := getConnStr()
+
+	//====== Initialize the database
+	postgresDB, err := database.NewPostgresConnection(connStr)
+	if err != nil {
+		log.Fatalf("Error initializing database: %v", err)
+	}
+	defer database.CloseDatabase(postgresDB)
+
+	//====== Initialize components
+	postgresRepo := repositories.NewPostgresRepository(postgresDB)
+	blogService := service.NewBlogService(postgresRepo)
+	blogController := controller.NewController(blogService)
+	blogRouter := router.NewRouter(blogController)
+
 	initializeServer()
 
-	router.Init(e)
+	blogRouter.Init(e)
 
-	//======== Shutdown the all layers when the server is closed
-	defer router.Shutdown()
 	//======== Run the server
-	err := e.Run(":8080")
+	err = e.Run(":8080")
 	if err != nil {
 		return
 	}
@@ -42,4 +60,13 @@ func initializeServer() {
 		}
 		c.Next()
 	})
+}
+
+func getConnStr() string {
+	user := "Blog_owner"
+	password := os.Getenv("DB_PASSWORD")
+	hostName := "ep-late-sun-a5p8yfr7.us-east-2.aws.neon.tech"
+	stringTail := " dbname=Blog port=5432 sslmode=require TimeZone=UTC"
+	connStr := "host=" + hostName + " user=" + user + " password=" + password + stringTail
+	return connStr
 }

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"fmt"
-	"go-blog/internal/models"
+	"go-blog/internal/domain/models"
 	"go-blog/internal/service"
 	"html/template"
 	"sync"
@@ -20,34 +20,47 @@ var (
 	faviconName string
 )
 
-type BlogPost = models.BlogPost
+type (
+	BlogPost    = models.BlogPost
+	BlogService = service.BlogService
+)
 
-func Init() {
-	service.InitDatabase()
-	getStaticFiles()
-
+type Controller struct {
+	blogService *BlogService
+	posts       []models.BlogPost
+	postsMutex  sync.RWMutex
+	cssName     string
+	cssData     template.CSS
+	jsName      string
+	faviconName string
 }
 
-func Shutdown() {
-	service.CloseDatabase()
+func NewController(blogService *BlogService) *Controller {
+	c := &Controller{blogService: blogService}
+	c.Init()
+	return c
 }
 
-func updatePostsFromDB() {
-	newPosts := service.GetBlogPosts()
+func (c *Controller) Init() {
+	c.getStaticFiles()
+}
+
+func (c *Controller) updatePostsFromDB() {
+	newPosts := c.blogService.GetBlogPosts()
 	postsMutex.Lock()
 	posts = newPosts
 	postsMutex.Unlock()
 }
 
-func getStaticFiles() {
+func (c *Controller) getStaticFiles() {
 	cssName = "/public/miniStyles/total.min.css"
 	cssData = getCSS("main.min.css")
 	jsName = "/public/scripts/main.min.js"
 	faviconName = "/public/static/favicon.ico"
-	posts = service.GetBlogPosts()
+	posts = c.blogService.GetBlogPosts()
 }
 
-func GetMainData() gin.H {
+func (c *Controller) GetMainData() gin.H {
 	postsMutex.RLock()
 	defer postsMutex.RUnlock()
 	return gin.H{
@@ -60,19 +73,7 @@ func GetMainData() gin.H {
 	}
 }
 
-func GetPostableData() gin.H {
-	postsMutex.RLock()
-	defer postsMutex.RUnlock()
-	return gin.H{
-		"canonicalURL": fmt.Sprintf("https://localhost:8080/postable"),
-		"cssName":      cssName,
-		"jsName":       jsName,
-		"posts":        posts,
-		"faviconName":  faviconName,
-	}
-}
-
-func GetPostData(post *BlogPost) gin.H {
+func (c *Controller) GetPostData(post *BlogPost) gin.H {
 	safeBody := template.HTML(post.Body)
 	return gin.H{
 		"canonicalURL": fmt.Sprintf("https://localhost:8080/posts/%d", post.ID),
@@ -86,12 +87,12 @@ func GetPostData(post *BlogPost) gin.H {
 	}
 }
 
-func AddPost(post models.BlogPost) {
-	service.CreateBlogPost(post)
-	updatePostsFromDB()
+func (c *Controller) AddPost(post models.BlogPost) {
+	c.blogService.CreateBlogPost(post)
+	c.updatePostsFromDB()
 }
 
-func GetPost(id int) *BlogPost {
+func (c *Controller) GetPost(id int) *BlogPost {
 	postsMutex.RLock()
 	defer postsMutex.RUnlock()
 
