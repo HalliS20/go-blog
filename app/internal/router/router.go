@@ -10,6 +10,8 @@ type Router struct {
 	ctrl *ctrl.Controller
 }
 
+// New Router takes in pointer to controller
+// we could fix this by changing the controller to an interface
 func NewRouter(ctrl *ctrl.Controller) *Router {
 	r := &Router{ctrl: ctrl}
 	return r

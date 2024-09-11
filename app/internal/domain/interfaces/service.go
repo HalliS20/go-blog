@@ -4,7 +4,7 @@ import "go-blog/internal/domain/models"
 
 type BlogPost = models.BlogPost
 
-type BlogService interface {
+type BlogPostServiceInterface interface {
 	GetBlogPosts() []BlogPost
 	CreateBlogPost(post BlogPost)
 }

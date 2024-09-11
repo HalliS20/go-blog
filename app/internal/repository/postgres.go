@@ -1,4 +1,4 @@
-package repositories
+package repository
 
 import (
 	"go-blog/internal/domain/interfaces"
@@ -10,15 +10,15 @@ import (
 )
 
 type (
-	BlogPost           = models.BlogPost
-	BlogPostRepository = interfaces.BlogPostRepository
+	BlogPost              = models.BlogPost
+	BlogPostRepoInterface = interfaces.BlogPostRepoInterface
 )
 
 type PostgresRepository struct {
 	DB *gorm.DB
 }
 
-func NewPostgresRepository(DB *gorm.DB) BlogPostRepository {
+func NewPostgresRepository(DB *gorm.DB) BlogPostRepoInterface {
 	return &PostgresRepository{DB: DB}
 }
 

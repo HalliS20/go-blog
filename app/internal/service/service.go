@@ -8,15 +8,15 @@ import (
 )
 
 type (
-	BlogPost           = models.BlogPost
-	BlogPostRepository = interfaces.BlogPostRepository
+	BlogPost              = models.BlogPost
+	BlogPostRepoInterface = interfaces.BlogPostRepoInterface
 )
 
 type BlogService struct {
-	repo BlogPostRepository
+	repo BlogPostRepoInterface
 }
 
-func NewBlogService(repo BlogPostRepository) *BlogService {
+func NewBlogService(repo BlogPostRepoInterface) interfaces.BlogPostServiceInterface {
 	return &BlogService{repo: repo}
 }
 

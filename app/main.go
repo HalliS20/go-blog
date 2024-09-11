@@ -4,7 +4,7 @@ import (
 	"go-blog/internal/config"
 	"go-blog/internal/controller"
 	"go-blog/internal/database"
-	"go-blog/internal/repositories"
+	"go-blog/internal/repository"
 	"go-blog/internal/router"
 	"go-blog/internal/service"
 	"log"
@@ -34,7 +34,7 @@ func main() {
 	defer database.CloseDatabase(postgresDB)
 
 	//====== Initialize components
-	postgresRepo := repositories.NewPostgresRepository(postgresDB)
+	postgresRepo := repository.NewPostgresRepository(postgresDB)
 	blogService := service.NewBlogService(postgresRepo)
 	blogController := controller.NewController(blogService)
 	blogRouter := router.NewRouter(blogController)

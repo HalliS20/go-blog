@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
+	"go-blog/internal/domain/interfaces"
 	"go-blog/internal/domain/models"
-	"go-blog/internal/service"
 	"html/template"
 	"sync"
 
@@ -22,11 +22,11 @@ var (
 
 type (
 	BlogPost    = models.BlogPost
-	BlogService = service.BlogService
+	BlogService = interfaces.BlogPostServiceInterface
 )
 
 type Controller struct {
-	blogService *BlogService
+	blogService BlogService
 	posts       []models.BlogPost
 	postsMutex  sync.RWMutex
 	cssName     string
@@ -35,7 +35,7 @@ type Controller struct {
 	faviconName string
 }
 
-func NewController(blogService *BlogService) *Controller {
+func NewController(blogService BlogService) *Controller {
 	c := &Controller{blogService: blogService}
 	c.Init()
 	return c
