@@ -1,0 +1,28 @@
+package title
+
+templ Title(lock bool, description bool) {
+	<div id="top-desc">
+		<div id="page-top">
+			<button data-href="/" id="title-button">
+				<a href="/" style="display: none"></a>
+				<h1>HS20</h1>
+				<h2>blog</h2>
+			</button>
+			if lock {
+				<button id="unlock">
+					<img alt="lock" src="/public/static/lock.svg"/>
+				</button>
+			}
+		</div>
+		if description {
+			<div id="main-description">
+				<p>
+					Journal of a deluded dev, with an unhealthy
+					obsession for <b>SEO</b> and <b>SPEED</b> (the
+					concept).
+				</p>
+				<div class="line"></div>
+			</div>
+		}
+	</div>
+}

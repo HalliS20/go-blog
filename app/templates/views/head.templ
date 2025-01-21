@@ -1,24 +1,24 @@
 package views
 
-templ Head(title string,description string, favicon string, canonicalURL string, cssLink string, jsLink string, cssData
-string) {
-
-<head>
-    <title>{ title }</title>
-    <meta content={description} name="description" />
-    <meta content="HalliS20" name="author" />
-    <meta content="blog, posts, updates, dev, life, work, tech, performance blog, SEO friendly blog, SEO"
-        name="keywords" />
-    <meta charset="UTF-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href={ favicon } rel="icon" />
-    <link href={ canonicalURL } rel="canonical" />
-    <link href={ cssLink } media="print" onload="this.media='all'" rel="stylesheet" />
-    <script defer src={ jsLink }></script>
-    <style>
+templ Head(title string, description string, favicon string, canonicalURL string, cssLink string, jsLink string, cssData string) {
+	<head>
+		<title>{ title }</title>
+		<meta content={ description } name="description"/>
+		<meta content="HalliS20" name="author"/>
+		<meta
+			content="blog, posts, updates, dev, life, work, tech, performance blog, SEO friendly blog, SEO"
+			name="keywords"
+		/>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+		<link href={ favicon } rel="icon"/>
+		<link href={ canonicalURL } rel="canonical"/>
+		<link href={ cssLink } media="print" onload="this.media='all'" rel="stylesheet"/>
+		<script defer src={ jsLink }></script>
+		<style>
         {
             ! cssData
         }
     </style>
-</head>
+	</head>
 }

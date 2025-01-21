@@ -1,0 +1,13 @@
+package views
+
+templ Body(title templ.Component, content templ.Component) {
+	<body>
+		// i got to be able to get rid of these tags
+		<div id="content">
+			<div id="page">
+				@title
+				@content
+			</div>
+		</div>
+	</body>
+}
